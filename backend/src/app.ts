@@ -1,11 +1,14 @@
 import express from 'express'
 import 'dotenv/config'
+import cors from 'cors'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
 
 const app = express()
 
+
 //Middleware
+app.use(cors())
 app.use(express.json())
 
 //Routes
