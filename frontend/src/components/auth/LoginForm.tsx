@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import {loginSchema, type LoginSchemaType } from "@/lib/zodSchema"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const LoginForm = ()=>{
-    const {register,handleSubmit,formState:{errors}}= useForm()
+    const {register,handleSubmit,formState:{errors, isSubmitting}}= useForm<LoginSchemaType>({
+        resolver : zodResolver(loginSchema)
+    })
     const onSubmit=(data:any)=>{
         console.log(data)
     }
