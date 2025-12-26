@@ -3,7 +3,7 @@ type LoginPayload ={
     password: string
 }
 export const loginApi = async(data:LoginPayload )=>{
-    const response = await fetch('http://localhost:3000/api/auth/login',{
+    const response = await fetch('https://hrms-5-z5lv.onrender.com/api/auth/login',{
         method: "POST",
         headers:{
             "Content-Type":"application/json"
@@ -20,7 +20,7 @@ type SetPasswordPayload = {
     confirmPassword: string
 }
 export const setPasswordApi = async(data: SetPasswordPayload)=>{
-    const response = await fetch('http://localhost:3000/api/auth/register',{
+    const response = await fetch('https://hrms-5-z5lv.onrender.com/api/auth/register',{
         method: "POST",
         headers:{
             "Content-Type":"application/json"
@@ -35,7 +35,7 @@ export const setPasswordApi = async(data: SetPasswordPayload)=>{
 
 const authorizedFetch = async (endpoint: string)=>{
     const token = localStorage.getItem("token")
-    const response = await fetch(`http://localhost:3000/api${endpoint}`,{
+    const response = await fetch(`https://hrms-5-z5lv.onrender.com/api${endpoint}`,{
         method: 'GET',
         headers:{
             "Content-Type": "application/json",
