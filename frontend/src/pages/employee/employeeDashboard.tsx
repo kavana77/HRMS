@@ -3,7 +3,6 @@ import Background from "../../assets/employeeBg.png"
 import { useQuery } from "@tanstack/react-query";
 import DashboardNavbar from "@/components/common/DashboardNavbar";
 import EmpNavImg from "../../assets/employeeNavbar.png"
-import DashboardTabs from "@/components/common/DashboardTabs";
 import WelcomeAttendanceCard from "@/components/employee/WelcomeAttendanceCard";
 import BottomHoverMenu from "@/components/BottomHoverMenu";
 const EmployeeDashboard = ()=>{
