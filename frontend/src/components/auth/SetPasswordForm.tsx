@@ -3,13 +3,23 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import {setPasswordSchema, type SetPasswordSchemaType } from "@/lib/zodSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { setPasswordApi } from "@/utils/http"
 
 const SetPasswordForm = ()=>{
     const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm<SetPasswordSchemaType>({
         resolver: zodResolver(setPasswordSchema)
     })
-    const onSubmit = (data: any)=>{
-        console.log("Set password data", data)
+    const {mutateAsync} = useMutation({
+        mutationFn: setPasswordApi
+    })
+    const onSubmit = async(data: SetPasswordSchemaType)=>{
+        try {
+            await mutateAsync(data)
+            console.log("Password set successfully")
+        } catch (error) {
+            console.error("Failed to set password", error)
+        }
     }
     return(
         <form className="space-y-3 p-4" onSubmit={handleSubmit(onSubmit)}>

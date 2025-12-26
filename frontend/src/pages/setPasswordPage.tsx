@@ -1,7 +1,9 @@
 import SetPasswordForm from "@/components/auth/SetPasswordForm"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
+
 const SetPasswordPage = ()=>{
+   
     return(
         <div className="flex justify-center items-center min-h-screen">
             <Card className="w-110 bg-white/50">

@@ -32,3 +32,31 @@ export const setPasswordApi = async(data: SetPasswordPayload)=>{
     }
     return response.json()
 }
+
+const authorizedFetch = async (endpoint: string)=>{
+    const token = localStorage.getItem("token")
+    const response = await fetch(`http://localhost:3000/api${endpoint}`,{
+        method: 'GET',
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    })
+    if(!response.ok){
+        const error = await response.json()
+        throw new Error(error.message ||"Access denied")
+    }
+    return response.json()
+}
+//Admin API
+export const getAdminDashboard = ()=>{
+    return authorizedFetch("/admin")
+}
+//Manager API
+export const getManagerDashboard = ()=>{
+    return authorizedFetch("/manager")
+}
+//Employee API
+export const getEmployeeDashboard = ()=>{
+    return authorizedFetch("/employee")
+}

@@ -1,6 +1,7 @@
 import LoginForm from "@/components/auth/LoginForm"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
+
 const Login = () => {
     return (
         <div className="flex items-center justify-center min-h-screen">

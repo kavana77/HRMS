@@ -46,6 +46,7 @@ export const login:RequestHandler =async (req , res)=>{
        const token = jwt.sign({id: user._id, role: user.role}, env.JWT_SECRET, {expiresIn: "1h"})
        res.status(200).json({token: token, role: user.role})
     } catch (error) {
-        
+        console.error(error);
+        return res.status(500).json({message:"Internal Server issue",error})
     }
 }
