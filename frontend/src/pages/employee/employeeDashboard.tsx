@@ -5,6 +5,7 @@ import DashboardNavbar from "@/components/common/DashboardNavbar";
 import EmpNavImg from "../../assets/employeeNavbar.png"
 import DashboardTabs from "@/components/common/DashboardTabs";
 import WelcomeAttendanceCard from "@/components/employee/WelcomeAttendanceCard";
+import BottomHoverMenu from "@/components/BottomHoverMenu";
 const EmployeeDashboard = ()=>{
     const { data } = useQuery({
     queryKey: ["employee"],
@@ -19,10 +20,9 @@ const EmployeeDashboard = ()=>{
             role="employee"
             image={EmpNavImg}
             />
-            <DashboardTabs
-            role="employee"/>
             <WelcomeAttendanceCard/>
             {data}Employee Dashboard
+            <BottomHoverMenu/>
         </section>
     )
 }
