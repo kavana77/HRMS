@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarCheck, ClipboardList, FileText, Home, Menu, Wallet, X } from "lucide-react";
+import { CalendarCheck, ClipboardList, FileText, Home,  Wallet } from "lucide-react";
 
 
 const BottomHoverMenu = () => {
@@ -7,8 +7,8 @@ const BottomHoverMenu = () => {
 
     return (
         <div className="fixed bottom-24 left-1/2 -translate-x-1/2">
-            <div className="relative w-40 h-40">
-                {/* Small icons */}
+            <div className="relative w-40 h-40" >
+                {/* Home */}
                 <button
                     className={`group absolute -bottom-23 left- -translate-x-1/2
                     w-10 h-10 rounded-full bg-white/80 text-black flex items-center justify-center
@@ -104,9 +104,9 @@ const BottomHoverMenu = () => {
                 </button>
                 <button
                     className={`group absolute -bottom-23 -right-10 -translate-x-1/2
-  w-10 h-10 rounded-full bg-white/80 backdrop-blur-md
-  flex items-center justify-center
-  transition-all duration-300 ease-out
+                    w-10 h-10 rounded-full bg-white/80 backdrop-blur-md
+                    flex items-center justify-center
+                    transition-all duration-300 ease-out
                     ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
                 >
                     {/* Tooltip */}
@@ -139,12 +139,10 @@ const BottomHoverMenu = () => {
 
                 {/* Center button */}
                 <button
-                    onClick={() => setOpen(!open)}
                     className="absolute -bottom-41 left-1/2 -translate-x-1/2
-                    w-26 h-26 rounded-full bg-white text-black flex items-center justify-center
-                    shadow-lg "
-                            >
-                    {open ? <X className="absolute top-2" /> : <Menu className="text-white" />}
+                w-26 h-26 rounded-full bg-white text-black flex items-center justify-center
+                shadow-lg " onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}
+                        >
                 </button>
             </div>
         </div>
