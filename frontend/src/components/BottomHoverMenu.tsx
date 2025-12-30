@@ -1,152 +1,81 @@
 import { useState } from "react";
-import { CalendarCheck, ClipboardList, FileText, Home,  Wallet } from "lucide-react";
-
+import {
+  Home,
+  CalendarCheck,
+  Wallet,
+  ClipboardList,
+  FileText,
+} from "lucide-react";
 
 const BottomHoverMenu = () => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    return (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2">
-            <div className="relative w-40 h-40" >
-                {/* Home */}
-                <button
-                    className={`group absolute -bottom-23 left- -translate-x-1/2
-                    w-10 h-10 rounded-full bg-white/80 text-black flex items-center justify-center
-                    transition-all duration-300 hover:shadow-lg shadow-black/70
-                    ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-                >
-                    <span
-                        className="
-                    pointer-events-none
-                    absolute -top-9 left-0 -translate-x-1/2
-                    whitespace-nowrap
-                    rounded-md bg-black/80 px-2 py-1
-                    text-xs text-white
-                    opacity-0 scale-95
-                    transition-all duration-200
-                    group-hover:opacity-100 group-hover:scale-100
-    "
-                    >
-                        Home
-                    </span>
-                    <Home size={18} className="hover:scale-150 duration-200 transition-all cursor-pointer active:scale-110" />
-                </button>
+  return (
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50">
+      {/* Half-moon hover area */}
+      <div
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        className={`
+          relative overflow-hidden
+          flex items-center justify-center
+          bg-white/90 backdrop-blur-md shadow-xl
+          transition-all duration-300 ease-out
+          ${open ? "w-53 h-26" : "w-21 h-10"}
+          rounded-t-full
+        `}
+      >
+        {/* Icons container */}
+        <div
+          className={`relative
+            flex items-center gap-6
+            transition-all duration-300 ease-out
+            ${open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+          `}
+        >
+          {/* Home */}
+          <div className="absolute -bottom-13 right-15 group flex flex-col items-center cursor-pointer">
+            <Home size={20} className="transition-transform duration-200 group-hover:scale-125" />
+            <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
+              Home
+            </span>
+          </div>
 
-                <button
-                    className={`group absolute -bottom-13 left-3.5
-                    w-10 h-10 rounded-full bg-white/80 text-black flex items-center justify-center
-                    transition-all duration-300 ease-out hover:shadow-lg shadow-black/70
-                    ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-                >
-                    <span
-                        className="
-                        pointer-events-none
-                        absolute -top-9 left-2 -translate-x-1/2
-                        whitespace-nowrap
-                        rounded-md bg-black/80 px-2 py-1
-                        text-xs text-white
-                        opacity-0 scale-95
-                        transition-all duration-200
-                        group-hover:opacity-100 group-hover:scale-100
-                        "
-                    >
-                        Attendance
-                    </span>
-                    <CalendarCheck size={18} className="hover:scale-150 duration-200 transition-all cursor-pointer 
-                    active:scale-110"/>
-                </button>
+          {/* Attendance */}
+          <div className="absolute -bottom-4 right-4.5 group flex flex-col items-center cursor-pointer">
+            <CalendarCheck size={20} className="transition-transform duration-200 group-hover:scale-125" />
+            <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
+              Attendance
+            </span>
+          </div>
 
-                <button
-                    className={`group absolute -bottom-9 right-1/2 translate-x-1/2
-                    w-10 h-10 rounded-full bg-white/80  text-black flex items-center justify-center
-                    transition-all duration-300 ease-out
-                    ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-                >
-                    <span
-                        className="
-                        pointer-events-none
-                        absolute -top-9 left-6 -translate-x-1/2
-                        whitespace-nowrap
-                        rounded-md bg-black/80 px-2 py-1
-                        text-xs text-white
-                        opacity-0 scale-95
-                        transition-all duration-200
-                        group-hover:opacity-100 group-hover:scale-100
-                        "
-                    >
-                        Payrolls
-                    </span>
-                    <Wallet size={18} className="hover:scale-150 duration-200 transition-all cursor-pointer hover:shadow-lg shadow-black/70
-                    active:scale-110"/>
-                </button>
-                <button
-                    className={`group absolute -bottom-13 right-8.5 translate-x-1/2
-                    w-10 h-10 rounded-full bg-white/80  text-black flex items-center justify-center
-                    transition-all duration-300 ease-out
-                    ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-                >
-                    <span
-                        className="
-                        pointer-events-none
-                        absolute -top-9 left-10 -translate-x-1/2
-                        whitespace-nowrap
-                        rounded-md bg-black/80 px-2 py-1
-                        text-xs text-white
-                        opacity-0 scale-95
-                        transition-all duration-200
-                        group-hover:opacity-100 group-hover:scale-100
-                        "
-                    >
-                        Requests
-                    </span>
-                    <ClipboardList size={18} className="hover:scale-150 duration-200 transition-all cursor-pointer hover:shadow-lg shadow-black/70
-                    active:scale-110"/>
-                </button>
-                <button
-                    className={`group absolute -bottom-23 -right-10 -translate-x-1/2
-                    w-10 h-10 rounded-full bg-white/80 backdrop-blur-md
-                    flex items-center justify-center
-                    transition-all duration-300 ease-out
-                    ${open ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-                >
-                    {/* Tooltip */}
-                    <span
-                        className="
-                        pointer-events-none
-                        absolute -top-9 left-10 -translate-x-1/2
-                        whitespace-nowrap
-                        rounded-md bg-black/80 px-2 py-1
-                        text-xs text-white
-                        opacity-0 scale-95
-                        transition-all duration-200
-                        group-hover:opacity-100 group-hover:scale-100
-                        "
-                    >
-                        Leaves
-                    </span>
+          {/* Payroll */}
+          <div className="absolute -bottom-1 -right-4 group flex flex-col items-center cursor-pointer">
+            <Wallet size={20} className="transition-transform duration-200 group-hover:scale-125" />
+            <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
+              Payroll
+            </span>
+          </div>
 
-                    {/* Icon */}
-                    <FileText
-                        size={18}
-                        className="
-                        cursor-pointer
-                        transition-transform duration-200
-                        group-hover:scale-125
-                        active:scale-110
-                        "
-                    />
-                </button>
+          {/* Requests */}
+          <div className="absolute -bottom-4 left-5 group flex flex-col items-center cursor-pointer">
+            <ClipboardList size={20} className="transition-transform duration-200 group-hover:scale-125" />
+            <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
+              Requests
+            </span>
+          </div>
 
-                {/* Center button */}
-                <button
-                    className="absolute -bottom-41 left-1/2 -translate-x-1/2
-                w-26 h-26 rounded-full bg-white text-black flex items-center justify-center
-                shadow-lg " onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}
-                        >
-                </button>
-            </div>
+          {/* Leaves */}
+          <div className="absolute -bottom-13 left-14 group flex flex-col items-center cursor-pointer">
+            <FileText size={20} className="transition-transform duration-200 group-hover:scale-125" />
+            <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
+              Leaves
+            </span>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default BottomHoverMenu;
