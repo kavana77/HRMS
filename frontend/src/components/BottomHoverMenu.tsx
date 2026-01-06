@@ -21,7 +21,7 @@ const BottomHoverMenu = () => {
           flex items-center justify-center
           bg-white/90 backdrop-blur-md shadow-xl
           transition-all duration-300 ease-out
-          ${open ? "w-53 h-26" : "w-21 h-10"}
+          ${open ? "w-72 h-36" : "w-32 h-16"}
           rounded-t-full
         `}
       >
@@ -34,40 +34,40 @@ const BottomHoverMenu = () => {
           `}
         >
           {/* Home */}
-          <div className="absolute -bottom-13 right-15 group flex flex-col items-center cursor-pointer">
-            <Home size={20} className="transition-transform duration-200 group-hover:scale-125" />
+          <div className="absolute -bottom-18 right-20 group flex flex-col items-center cursor-pointer">
+            <Home size={26} className="transition-transform duration-200 group-hover:scale-125" />
             <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
               Home
             </span>
           </div>
 
           {/* Attendance */}
-          <div className="absolute -bottom-4 right-4.5 group flex flex-col items-center cursor-pointer">
-            <CalendarCheck size={20} className="transition-transform duration-200 group-hover:scale-125" />
+          <div className="absolute -bottom-6 right-8 group flex flex-col items-center cursor-pointer">
+            <CalendarCheck size={26} className="transition-transform duration-200 group-hover:scale-125" />
             <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
               Attendance
             </span>
           </div>
 
           {/* Payroll */}
-          <div className="absolute -bottom-1 -right-4 group flex flex-col items-center cursor-pointer">
-            <Wallet size={20} className="transition-transform duration-200 group-hover:scale-125" />
+          <div className="absolute bottom-0 -right-4 group flex flex-col items-center cursor-pointer">
+            <Wallet size={26} className="transition-transform duration-200 group-hover:scale-125" />
             <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
               Payroll
             </span>
           </div>
 
           {/* Requests */}
-          <div className="absolute -bottom-4 left-5 group flex flex-col items-center cursor-pointer">
-            <ClipboardList size={20} className="transition-transform duration-200 group-hover:scale-125" />
+          <div className="absolute -bottom-6 left-9 group flex flex-col items-center cursor-pointer">
+            <ClipboardList size={26} className="transition-transform duration-200 group-hover:scale-125" />
             <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
               Requests
             </span>
           </div>
 
           {/* Leaves */}
-          <div className="absolute -bottom-13 left-14 group flex flex-col items-center cursor-pointer">
-            <FileText size={20} className="transition-transform duration-200 group-hover:scale-125" />
+          <div className="absolute -bottom-18 left-20 group flex flex-col items-center cursor-pointer">
+            <FileText size={28} className="transition-transform duration-200 group-hover:scale-125" />
             <span className="mt-0.5 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition">
               Leaves
             </span>
