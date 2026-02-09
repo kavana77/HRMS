@@ -7,7 +7,7 @@ interface Props {
 const DashboardTabs = ({role}: Props)=>{
     const tabs = dashboardTabs[role]
     return(
-        <div className="bg-white w-full rounded-t-sm shadow-sm px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+        <div className="bg-white w-full shadow-sm px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
             <nav className="flex h-10 items-center justify-between">
                 {tabs.map((tab)=>{
                     const Icon = tab.icon

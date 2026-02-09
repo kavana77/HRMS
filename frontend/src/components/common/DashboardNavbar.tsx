@@ -1,19 +1,16 @@
 import NavbarActions from "./NavbarActions"
 import NavbarSearch from "./NavbarSearch"
 import ProfileMenu from "./ProfileMenu"
-import Logo from "../../assets/magureLogo.png"
 interface DashboardNavbarProps {
   image: string;
   role: "admin" | "manager" | "employee";
 }
-const DashboardNavbar =({ image,role }: DashboardNavbarProps)=>{
+const DashboardNavbar =({role }: DashboardNavbarProps)=>{
     return(
-        <nav className="w-full bg-cover bg-center bg-no-repeat flex justify-between items-center h-16 rounded-t-xl px-2 sm:px-3 md:px-4 lg:px-10 xl:px-14"
-        style={{backgroundImage: `url(${image})`}}>
-
-            {/* icon */}
-            <div className="flex items-center">
-                <img src={Logo} className="w-25 sm:w-30 md:w-35 lg:w-40 xl:w-45 bg-cover bg-center "/>
+        <nav className="w-full bg-white/30 backdrop-blur-lg  flex justify-between items-center h-10  pr-2 sm:px-3 md:pr-4 lg:pr-10 xl:pr-14"
+        >
+            <div className="font-bold text-lg -ml-3">
+               HR Admin
             </div>
                 <NavbarSearch/>
             <div className="flex">

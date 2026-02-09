@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import Background from "../../assets/adminBg.png"
 import { getAdminDashboard } from "@/utils/http"
 import DashboardNavbar from "@/components/common/DashboardNavbar"
-import AdminNavImg from "../../assets/adminNavbar.png"
 import DashboardTabs from "@/components/common/DashboardTabs"
+import Sidebar from "@/components/common/Sidebar"
 
 const AdminDashboard =()=>{
     const {data} = useQuery({
@@ -11,13 +10,17 @@ const AdminDashboard =()=>{
         queryFn: getAdminDashboard
     })
     return(
-        <section className="min-h-screen w-full bg-cover bg-center bg-no-repeat"
-        style={{backgroundImage: `url(${Background})`}}>
-            <DashboardNavbar 
-            role="admin"
-            image={AdminNavImg}/>
-            <DashboardTabs role="admin"/>
-            {data}AdminDashboard
+        <section className="flex min-h-screen w-full bg-cover bg-center bg-no-repeat"
+        style={{backgroundImage: `url()`}}>
+            <Sidebar/>
+            <div className="w-full">
+                <DashboardNavbar 
+                role="admin"
+                image={""}/>
+                <DashboardTabs role="admin"/>
+                {data}AdminDashboard
+            </div>
+            
         </section>
     )
 }
