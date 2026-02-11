@@ -1,6 +1,6 @@
 import express from 'express'
 import authorizeRoles from '../middleware/roleMiddleware'
-import verifyToken from '../middleware/authMiddlewate'
+import verifyToken from '../middleware/authMiddleware'
 
 const router = express.Router()
 

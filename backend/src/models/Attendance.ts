@@ -1,5 +1,4 @@
-import e from "express";
-import mongoose, {Schema, Document} from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface AttendanceDocument extends Document {
     userId: mongoose.Types.ObjectId;
@@ -7,7 +6,13 @@ export interface AttendanceDocument extends Document {
     punchInTime?: Date;
     punchOutTime?: Date;
     totalMinutesWorked?: number;
-    status: "present" | "absent" | "leave" | "first-half" | "second-half" | "holiday" | "weekend" | "today";
+    status:
+    | "PRESENT"
+    | "ABSENT"
+    | "HALF_DAY"
+    | "LEAVE"
+    | "HOLIDAY"
+    | "WEEKEND";
     workMode: "remote" | "office" | "hybrid";
     location?: {
         latitude: number;
@@ -38,8 +43,13 @@ const attendanceSchema = new Schema<AttendanceDocument>({
     },
     status: {
         type: String,
-        enum : ["present", "absent", "leave", "HALF_DAY", "holiday", "weekend", "today"],
-        default: "absent",
+        enum: ["PRESENT",
+            "ABSENT",
+            "HALF_DAY",
+            "LEAVE",
+            "HOLIDAY",
+            "WEEKEND"],
+        default: "ABSENT",
     },
     workMode: {
         type: String,
@@ -55,9 +65,9 @@ const attendanceSchema = new Schema<AttendanceDocument>({
         }
     }
 },
-{
-    timestamps: true
-})
-attendanceSchema.index({employeeId: 1, date: 1}, {unique: true})
+    {
+        timestamps: true
+    })
+attendanceSchema.index({ userId: 1, date: 1 }, { unique: true })
 
 export default mongoose.model<AttendanceDocument>("Attendance", attendanceSchema)

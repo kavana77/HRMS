@@ -27,10 +27,10 @@ export const punchIn: RequestHandler = async (req, res) => {
             userId,
             date: todayDate,
             punchInTime: new Date(),
-            status: "present",
+            status: "PRESENT",
         })
-
-        return res.status(200).json({ message: "Punch-in successful", attendance });
+        await attendance.save()
+        return res.status(201).json({ message: "Punch-in successful", attendance });
     } catch (error) {
         console.error("Error in punchIn:", error)
         return res.status(500).json({ message: "Internal Server Error" })
@@ -58,7 +58,7 @@ export const punchOut: RequestHandler = async (req, res) => {
         //prevent double punch out
         if(attendance.punchOutTime){
             return res.status(400).json({
-                message: "You have already puched out today"
+                message: "You have already punched out today"
             })
         }
         const punchOutTime = new Date()
@@ -66,8 +66,9 @@ export const punchOut: RequestHandler = async (req, res) => {
         //calculate total minutes
         const diffMs = punchOutTime.getTime() - attendance.punchInTime.getTime()
         const totalMinutes = Math.floor(diffMs / (1000 * 60))
-        if(totalMinutes <240) status = "HALF_DAY"
-        else status = "present"
+attendance.status = totalMinutes < 240 
+  ? "HALF_DAY" 
+  : "PRESENT";
         //Update attendance record
         attendance.punchOutTime = punchOutTime;
         attendance.totalMinutesWorked = totalMinutes
@@ -75,7 +76,7 @@ export const punchOut: RequestHandler = async (req, res) => {
 
         return res.status(200).json({
             message: "Punch out successfull",
-            totalMinutes,
+            totalMinutesWorked: attendance.totalMinutesWorked,
             attendance
         })
     } catch (error) {

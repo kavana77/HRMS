@@ -31,7 +31,7 @@ const SetPasswordForm = ()=>{
                 {...register("password")}
                 className="bg-white rounded-md"/>
                 {errors.password && (
-                    <p className="text-sm text-red-500">{errors.password.message}</p>
+                    <p className="text-sm text-red-500">{String(errors.password.message)}</p>
                 )}
             </div>
             <div>
@@ -42,7 +42,7 @@ const SetPasswordForm = ()=>{
                 {...register("confirmPassword")}
                 className="bg-white rounded-md"/>
                 {errors.confirmPassword && (
-                    <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
+                    <p className="text-sm text-red-500">{String(errors.confirmPassword.message)}</p>
                 )}
             </div>
             <Button

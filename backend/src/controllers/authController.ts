@@ -7,8 +7,12 @@ import env from "../utils/validateEnv"
 export const register:RequestHandler =async (req , res)=>{
     const {email,password,role} = req.body
     try {
+        const existingUser = await User.findOne({email})
+        if(existingUser){
+            return res.status(400).json({message: "User already exists"})
+        }
         if(!email|| !password ||  !role){
-            return res.status(404).json({message: "Missing required fields"})
+            return res.status(400).json({message: "Missing required fields"})
         }
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -16,7 +20,8 @@ export const register:RequestHandler =async (req , res)=>{
         await newUser.save()
         res.status(201).json({message: `User registered with email ${email}`})
     } catch (error) {
-        return res.status(500).json({message: "Internal Server error", error})
+        console.error(error)
+        return res.status(500).json({message: "Internal Server error"})
     }
 }
 export const setPassword: RequestHandler = async (req ,res)=>{
@@ -37,7 +42,7 @@ export const login:RequestHandler =async (req , res)=>{
     try {
        const user = await User.findOne({email})
        if(!user){
-        return res.status(404).json({message: "User not found"})
+        return res.status(401).json({message: "User not found"})
        } 
        const isMatch = await bcrypt.compare(password, user.password)
        if(!isMatch){

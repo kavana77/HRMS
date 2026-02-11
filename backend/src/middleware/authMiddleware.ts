@@ -25,12 +25,10 @@ const verifyToken: RequestHandler = (req, res, next) => {
   try {
     // const decoded = jwt.verify(token, env.JWT_SECRET) as UserPayload;
     const decoded = jwt.verify(token, env.JWT_SECRET ) as UserPayload;
-console.log("DECODED WITHOUT VERIFY:", decoded);
-
+    if(!decoded.id){
+        return res.status(401).json({message: "Invalid token payload"})
+    }
     req.user = decoded;
-    console.log("TOKEN:", token);
-console.log("DECODED:", decoded);
-
     next();
   } catch (error) {
     return res.status(401).json({ message: "Token is not valid" });

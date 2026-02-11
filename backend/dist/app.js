@@ -8,11 +8,17 @@ require("dotenv/config");
 const cors_1 = __importDefault(require("cors"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const attendanceRoutes_1 = __importDefault(require("./routes/attendanceRoutes"));
 const app = (0, express_1.default)();
 //Middleware
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: [
+        "https://hrms-sable-two.vercel.app/"
+    ]
+}));
 app.use(express_1.default.json());
 //Routes
 app.use('/api/auth', authRoutes_1.default);
 app.use('/api/users', userRoutes_1.default);
+app.use('/api/attendance', attendanceRoutes_1.default);
 exports.default = app;
