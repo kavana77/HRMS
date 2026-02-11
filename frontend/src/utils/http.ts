@@ -51,19 +51,21 @@ const authorizedFetch = async (endpoint: string, options: RequestInit = {})=>{
 }
 //Admin API
 export const getAdminDashboard = ()=>{
-    return authorizedFetch("/admin")
+    return authorizedFetch("/users/admin")
 }
 //Manager API
 export const getManagerDashboard = ()=>{
-    return authorizedFetch("/manager")
+    return authorizedFetch("/users/manager")
 }
 //Employee API
 export const getEmployeeDashboard = ()=>{
-    return authorizedFetch("/employee")
+    return authorizedFetch("/users/employee")
 }
 
 export const getTodayAttendance = ()=>{
-    return authorizedFetch("/attendance/my-attendance")
+    return authorizedFetch("/attendance/my-attendance",{
+        method: "GET"
+    })
 }
 
 export const punchInApi = () =>{
