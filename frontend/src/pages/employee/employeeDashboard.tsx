@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import DashboardNavbar from "@/components/common/DashboardNavbar";
 import WelcomeAttendanceCard from "@/components/employee/WelcomeAttendanceCard";
 import BottomHoverMenu from "@/components/BottomHoverMenu";
+import PunchCard from "@/components/PunchCard";
 const EmployeeDashboard = ()=>{
     const { data } = useQuery({
     queryKey: ["employee"],
@@ -18,6 +19,7 @@ const EmployeeDashboard = ()=>{
             image={""}
             />
             <WelcomeAttendanceCard/>
+            <PunchCard/>
             {data}Employee Dashboard
             <BottomHoverMenu/>
         </section>

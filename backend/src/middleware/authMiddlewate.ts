@@ -24,7 +24,7 @@ const verifyToken: RequestHandler = (req, res, next) => {
 
   try {
     // const decoded = jwt.verify(token, env.JWT_SECRET) as UserPayload;
-    const decoded = jwt.decode(token) as UserPayload;
+    const decoded = jwt.verify(token, env.JWT_SECRET ) as UserPayload;
 console.log("DECODED WITHOUT VERIFY:", decoded);
 
     req.user = decoded;

@@ -33,13 +33,14 @@ export const setPasswordApi = async(data: SetPasswordPayload)=>{
     return response.json()
 }
 
-const authorizedFetch = async (endpoint: string)=>{
+const authorizedFetch = async (endpoint: string, options: RequestInit = {})=>{
     const token = localStorage.getItem("token")
     const response = await fetch(`https://hrms-5-z5lv.onrender.com/api${endpoint}`,{
-        method: 'GET',
+        ...options,
         headers:{
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            ...options.headers,
         }
     })
     if(!response.ok){
@@ -59,4 +60,20 @@ export const getManagerDashboard = ()=>{
 //Employee API
 export const getEmployeeDashboard = ()=>{
     return authorizedFetch("/employee")
+}
+
+export const getTodayAttendance = ()=>{
+    return authorizedFetch("/attendance/my-attendance")
+}
+
+export const punchInApi = () =>{
+    return authorizedFetch("/attendance/punch-in",{
+        method: "POST"
+    })
+}
+
+export const punchOutApi = () => {
+    return authorizedFetch("/attendance/punch-out",{
+        method: "POST"
+    })
 }

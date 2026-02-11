@@ -3,6 +3,7 @@ import 'dotenv/config'
 import cors from 'cors'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
+import attendanceRoutes from './routes/attendanceRoutes'
 
 const app = express()
 
@@ -20,5 +21,6 @@ app.use(express.json())
 //Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/attendance', attendanceRoutes )
 
 export default app
