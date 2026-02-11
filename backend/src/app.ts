@@ -13,7 +13,7 @@ app.use(cors(
     {
         origin:[
             "http://localhost:5173",
-            "https://hrms-sable-two.vercel.app/"
+            "https://hrms-sable-two.vercel.app"
         ]
     }
 ))
