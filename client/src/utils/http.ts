@@ -1,3 +1,5 @@
+import type { AdminLoginType } from "@/lib/zodSchema"
+
 export interface AdminSignUp {
     fullName: string,
     companyName: string,
@@ -27,4 +29,10 @@ export const adminSignup = async(data:AdminSignUp)=>{
     method: "POST",
     body: JSON.stringify(data)
  })
+}
+export const adminLogin = async(data: AdminLoginType)=>{
+    return authorizedFetch("/auth/admin/login",{
+        method: "POST",
+        body: JSON.stringify(data)
+    })
 }

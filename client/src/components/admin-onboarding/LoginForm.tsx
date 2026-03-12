@@ -4,9 +4,17 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Eye, EyeOff } from "lucide-react"
 import Logo from "../../assets/magure-logo.png"
+import type { AdminLoginType } from "@/lib/zodSchema"
+import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
+type LoginProps = {
+  onSubmit: (data: AdminLoginType) => void
+  register: UseFormRegister<AdminLoginType>
+  handleSubmit: UseFormHandleSubmit<AdminLoginType>
+  errors: FieldErrors<AdminLoginType>
+  isSubmitting: boolean
+}
 
-
-const LoginForm = () => {
+const LoginForm = ({onSubmit, register, handleSubmit, errors, isSubmitting}:LoginProps) => {
     const [showPassword, setShowPassword] = useState(false)
     return(
     <div>
@@ -17,17 +25,22 @@ const LoginForm = () => {
           Sign in to manage your organization’s HR system.
         </p>
       </div>
-       <form  className="space-y-5">
+       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Email */}
         <div>
           <Label className="mb-2 block">
             Company's Email ID <span className="text-red-500">*</span>
           </Label>
           <Input
+          {...register("email")}
             type="email"
             placeholder="you@company.com"   
           />
+          
         </div>
+        {errors?.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          )}
         {/* Password */}
         <div>
           <Label className="mb-2 block">
@@ -36,10 +49,9 @@ const LoginForm = () => {
 
           <div className="relative">
             <Input
+            {...register("password")}
               type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
-              
-              
+              placeholder="Enter password"     
             />
              <button
               type="button"
@@ -49,7 +61,9 @@ const LoginForm = () => {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
-
+          {errors?.password && (
+            <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+          )}
           <div className="text-right mt-1">
             <button
               type="button"
@@ -60,7 +74,7 @@ const LoginForm = () => {
           </div>
         </div>
         {/* Button */}
-        <Button className="w-full">Log in</Button>
+        <Button disabled={isSubmitting} className="w-full">{isSubmitting?"Loging...": "Log in"}</Button>
 
         {/* Signup */}
         <p className="text-center text-sm text-gray-500">
