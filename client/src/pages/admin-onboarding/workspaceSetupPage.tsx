@@ -1,0 +1,89 @@
+import FileIcon from "../../assets/icons/file.png"
+import SettingIcon from "../../assets/icons/setting.png"
+import MailIcon from "../../assets/icons/mail.png"
+import SetupStepCard from "../../components/admin-onboarding/SetupStepCard"
+import { useNavigate } from "react-router-dom"
+import Logo from "../../assets/magure-logo.png"
+import InviteAdmin from "@/components/admin-onboarding/SelectDialog"
+import { useState } from "react"
+import { Input } from "../../components/ui/input"
+import { Label } from "../../components/ui/label"
+import { Button } from "@/components/ui/button"
+
+const WorkspaceSetupPage = () => {
+  const navigate = useNavigate()
+  const [openInviteAdmin, setOpenInviteAdmin] = useState(false)
+
+  return (
+    <div className="p-14 flex flex-col items-center justify-center bg-gray-50 ">
+
+      {/* Logo */}
+      <img src={Logo} className="w-12 mb-4" />
+
+      {/* Title */}
+      <h1 className="text-2xl font-bold mb-2">
+        Set up your workspace
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-gray-500 text-center mb-10">
+        Complete the essential steps to configure your company and start managing your team.
+      </p>
+
+      {/* Cards */}
+      <div className="flex gap-6 flex-wrap justify-center">
+
+        <SetupStepCard
+          icon={<img src={FileIcon} className="w-8 h-8"/>}
+          title="Company Profile"
+          description="Add your company details like name, logo, and registered address."
+          onClick={() => navigate("/admin/company-profile")}
+        />
+
+        <SetupStepCard
+          icon={<img src={SettingIcon} className="w-8 h-8"/>}
+          title="Company Settings"
+          description="Configure attendance rules, leave policies, and payroll preferences."
+          onClick={() => navigate("/admin/company-settings")}
+        />
+
+        <SetupStepCard
+          icon={<img src={MailIcon} className="w-8 h-8"/>}
+          title="Invite Admin"
+          description="Invite your HR team members to help manage operations."
+          onClick={() => setOpenInviteAdmin(true)}
+        />
+
+      </div>
+
+      {/* Dashboard Link */}
+      <button
+        onClick={() => navigate("/admin/dashboard")}
+        className="mt-10 text-blue-600 text-sm hover:underline"
+      >
+        Go to Dashboard →
+      </button>
+
+    <InviteAdmin title="Invite Admin"
+    isOpen={openInviteAdmin}
+    onOpenChange={setOpenInviteAdmin}>
+                  <div className="text-gray-500 space-y-2">
+              <Label className="mt-6">
+                Full Name <span className="text-red-500">*</span>
+              </Label>
+              <Input placeholder="e.g. Abhinav Chowdary" className="py-5" />
+
+              <Label className="mt-5">
+                Company's Email ID <span className="text-red-500">*</span>
+              </Label>
+              <Input placeholder="e.g. abhinav@company.com" className="py-5" />
+            </div>
+
+
+    </InviteAdmin>
+   
+    </div>
+  )
+}
+
+export default WorkspaceSetupPage

@@ -11,9 +11,20 @@ export const adminSignupSchema = z.object({
     message: "Passwords do not match",
     path: ["confirmPassword"]
 })
+
 export const adminLoginSchema = z.object({
     email: z.string().email("Enter a valid email address"),
     password: z.string().min(6, "Password must be at least 6 characters")
 })
-export type AdminSignInType = z.infer<typeof adminSignupSchema>
+
+export const companysetupForm = z.object({
+    companyName: z.string().trim().min(2, "Company name must be at least 2 characters"),
+    companyLogo: z.string().url("Invalig logo URL").optional(),
+    address: z.string().trim().min(5, "Address must be at least 5 charaters"),
+    pincode: z.string().regex(/^[0-9]{6}$/,"Pincode must be 6 digits"),
+    state: z.string().trim().min(2, "State is required"),
+    country: z.string().trim().min(2, "Country is required")
+})
+export type AdminSignUpType = z.infer<typeof adminSignupSchema>
 export type AdminLoginType = z.infer<typeof adminLoginSchema>
+export type CompanysetupForm = z.infer<typeof companysetupForm>

@@ -1,6 +1,6 @@
 import { Share } from "lucide-react"
-import Logo from "../../assets/magure-logo.png"
-import Microsoft from "../../assets/microsoft-outlook.png"
+import Logo from "../../../assets/magure-logo.png"
+import Microsoft from "../../../assets/microsoft-outlook.png"
 
 interface VerifyEmailCardProps {
     email: string

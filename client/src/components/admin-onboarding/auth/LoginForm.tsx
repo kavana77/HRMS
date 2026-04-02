@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
+import { Button } from "../../ui/button"
+import { Input } from "../../ui/input"
+import { Label } from "../../ui/label"
 import { Eye, EyeOff } from "lucide-react"
-import Logo from "../../assets/magure-logo.png"
+import Logo from "../../../assets/magure-logo.png"
 import type { AdminLoginType } from "@/lib/zodSchema"
 import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
 type LoginProps = {

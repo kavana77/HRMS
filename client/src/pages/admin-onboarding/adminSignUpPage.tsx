@@ -1,22 +1,19 @@
-import SignupForm from "@/components/admin-onboarding/SignupForm"
-import {type AdminSignInType, adminSignupSchema } from "@/lib/zodSchema"
-import { adminSignup, type AdminSignUp } from "@/utils/http"
-import { useMutation } from "@tanstack/react-query"
+import SignupForm from "@/components/admin-onboarding/auth/SignupForm"
+import { type AdminSignUpType, adminSignupSchema } from "@/lib/zodSchema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import GradientContainer from "@/components/admin-onboarding/GradientContainer"
+import { useAuth } from "@/hooks/useAuth"
 
 const AdminSignUpPage = () => {
-    
-    const {register, handleSubmit,reset, formState: {errors, isSubmitting}} = useForm<AdminSignInType>({
+    const {signup} = useAuth()
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AdminSignUpType>({
         resolver: zodResolver(adminSignupSchema)
     })
-    const {mutateAsync} = useMutation({
-        mutationFn: adminSignup
-    })
-    const onSubmit = async(data: AdminSignUp)=>{
+
+    const onSubmit = async (data: AdminSignUpType) => {
         try {
-            const res = await mutateAsync(data)
-            localStorage.setItem("token", res.token)
+            await signup(data)
             console.log("Signed in successfully", data)
             reset()
         } catch (error) {
@@ -24,7 +21,7 @@ const AdminSignUpPage = () => {
         }
     }
     return (
-        <div className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden py-20">
+        <div className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden ">
             {/* GRID BACKGROUND */}
             <div
                 className="absolute inset-0
@@ -33,16 +30,14 @@ const AdminSignUpPage = () => {
                 [mask-image:radial-gradient(circle_at_center,black_25%,transparent_70%)]"
             />
             {/* FORM CARD */}
-            <div className="relative z-10 border-8 border-[#BFD5FB] rounded-4xl ">
-                <div className="bg-white rounded-2xl shadow-xl p-7 w-120 ">
-                    <SignupForm 
+            <GradientContainer>
+                <SignupForm
                     onSubmit={onSubmit}
                     handleSubmit={handleSubmit}
                     register={register}
                     errors={errors}
-                    isSubmitting={isSubmitting}/>
-                </div>
-            </div>
+                    isSubmitting={isSubmitting} />
+            </GradientContainer>
         </div>
     )
 }

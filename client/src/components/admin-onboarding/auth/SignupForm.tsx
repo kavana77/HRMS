@@ -2,10 +2,10 @@ import { useState } from "react"
 import PhoneInput from "react-phone-number-input"
 import "react-phone-number-input/style.css"
 import { Eye, EyeClosed } from "lucide-react"
-import Logo from "../../assets/magure-logo.png"
+import Logo from "../../../assets/magure-logo.png"
 import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
 import type { AdminSignInType } from "@/lib/zodSchema"
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 
 type SignupProps = {
   onSubmit: (data: AdminSignInType) => void
