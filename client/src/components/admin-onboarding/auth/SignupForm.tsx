@@ -50,7 +50,6 @@ const SignupForm = ({
           placeholder="e.g. John Doe"
           className="border w-full p-2 rounded-md text-sm"
         />
-
         {errors?.fullName && (
           <p className="text-red-500 text-xs mt-1">
             {errors.fullName.message}

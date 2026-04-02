@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import LeaveTable from "./LeaveTable"
+import { Link } from "react-router"
 
 const AddLeaveForm = () => {
   return (
@@ -102,16 +103,19 @@ const AddLeaveForm = () => {
 
       {/* ACTION BUTTONS */}
       <div className="flex gap-4 justify-end mt-6">
+        <Link to="/leave">
         <Button
+        
           variant="outline"
           className="px-8 border-blue-600 text-blue-600"
         >
           Cancel
         </Button>
-
+        </Link>
         <Button className="px-8 bg-blue-600 hover:bg-blue-700">
           Save
         </Button>
+        
       </div>
       <LeaveTable/>
     </div>

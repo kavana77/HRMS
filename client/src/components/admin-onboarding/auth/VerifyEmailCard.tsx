@@ -28,10 +28,10 @@ const VerifyEmailCard = ({email, onResend}: VerifyEmailCardProps)=>{
                 <Share/>
             </button>
             {/* Resent */}
-            <p className="mt-6 text-sm text-gray-400">Didn't receive the email?{" "}
+            <p className="mt-6 text-sm text-gray-400 text-xs ">Didn't receive the email?{" "}
                 <button
                 onClick={onResend}
-                className="text-blue-600 font-medium hover:underline"
+                className="text-xs text-blue-600 font-medium hover:underline"
                 >Resent</button>
             </p>
         </div>
