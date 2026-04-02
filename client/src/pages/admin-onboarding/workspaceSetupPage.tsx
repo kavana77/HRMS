@@ -8,7 +8,6 @@ import InviteAdmin from "@/components/admin-onboarding/SelectDialog"
 import { useState } from "react"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
-import { Button } from "@/components/ui/button"
 
 const WorkspaceSetupPage = () => {
   const navigate = useNavigate()

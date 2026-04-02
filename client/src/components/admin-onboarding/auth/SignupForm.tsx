@@ -4,14 +4,14 @@ import "react-phone-number-input/style.css"
 import { Eye, EyeClosed } from "lucide-react"
 import Logo from "../../../assets/magure-logo.png"
 import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
-import type { AdminSignInType } from "@/lib/zodSchema"
+import type { AdminSignUpType } from "@/lib/zodSchema"
 import { Button } from "../../ui/button"
 
 type SignupProps = {
-  onSubmit: (data: AdminSignInType) => void
-  register: UseFormRegister<AdminSignInType>
-  handleSubmit: UseFormHandleSubmit<AdminSignInType>
-  errors: FieldErrors<AdminSignInType>
+  onSubmit: (data: AdminSignUpType) => void
+  register: UseFormRegister<AdminSignUpType>
+  handleSubmit: UseFormHandleSubmit<AdminSignUpType>
+  errors: FieldErrors<AdminSignUpType>
   isSubmitting: boolean
 }
 
