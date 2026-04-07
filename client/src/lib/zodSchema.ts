@@ -25,6 +25,43 @@ export const companysetupForm = z.object({
     state: z.string().trim().min(2, "State is required"),
     country: z.string().trim().min(2, "Country is required")
 })
+
+
+
+const dateSchema = z.string().refine(
+  (date) => !isNaN(Date.parse(date)),
+  { message: "Invalid date format" }
+)
+
+export const leaveTypeSchema = z.object({
+  leaveName: z.string().trim().min(2, "Leave name must be at least 2 characters"),
+
+ leaveType: z.enum(["Paid", "Unpaid"], {
+  message: "Leave type must be Paid or Unpaid"
+}),
+
+  validityFrom: dateSchema,
+  validityTo: dateSchema,
+
+  creditedDays: z.coerce.number().min(0, "Credited days must be a non-negative number"),
+
+resetType: z.enum(["Monthly", "Yearly", "None"], {
+  message: "Reset type must be Monthly, Yearly or None"
+}),
+
+  resetDate: dateSchema,
+
+  carryForward: z.boolean().optional(),
+  encashUnused: z.boolean().optional()
+})
+.refine((data) => new Date(data.validityTo) >= new Date(data.validityFrom), {
+  message: "Validity To must be after Validity From",
+  path: ["validityTo"]
+})
+export type LeaveResponseType = LeaveTypeType & {
+  _id: string
+}
 export type AdminSignUpType = z.infer<typeof adminSignupSchema>
 export type AdminLoginType = z.infer<typeof adminLoginSchema>
 export type CompanysetupForm = z.infer<typeof companysetupForm>
+export type LeaveTypeType = z.infer<typeof leaveTypeSchema>

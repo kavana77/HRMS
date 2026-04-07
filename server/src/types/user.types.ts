@@ -5,5 +5,8 @@ export interface User extends Document {
     email: string,
     phoneNumber: string,
     password: string,
-    role: "admin"
+    role: "admin",
+    isVerified?: boolean,
+    verificationToken?: string,
+    verificationTokenExpiry?: Date
 }

@@ -6,29 +6,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import type { LeaveResponseType, LeaveTypeType } from "@/lib/zodSchema"
 import { Pencil, Trash2 } from "lucide-react"
 
-type Leave = {
-  id: number
-  name: string
-  type: string
-  days: number
-  status: "Active" | "Pending"
+
+ type LeaveTableProps = {
+  leaves: LeaveResponseType[] 
+  onDelete: (id: string) => void
+  onEdit: (leave: LeaveTypeType) => void
 }
 
-const leaves: Leave[] = [
-  { id: 1, name: "Sick Leave", type: "Paid", days: 1, status: "Active" },
-  { id: 2, name: "Maternity Leave", type: "Paid", days: 25, status: "Pending" },
-  { id: 3, name: "Casual Leave", type: "Paid", days: 1, status: "Pending" },
-  { id: 4, name: "Casual Leave", type: "Paid", days: 1, status: "Active" },
-  { id: 5, name: "Compensatory Off", type: "Paid", days: 2, status: "Active" },
-]
-
-const LeaveTable = () => {
+const LeaveTable = ({ leaves=[], onDelete, onEdit }: LeaveTableProps) => {
   return (
     <div className="rounded-xl border overflow-hidden">
-      <Table>
-        
+      <Table> 
         {/* Header */}
         <TableHeader className="bg-[#E8EDF5]">
           <TableRow>
@@ -43,39 +34,39 @@ const LeaveTable = () => {
         {/* Body */}
         <TableBody>
           {leaves.map((leave) => (
-            <TableRow key={leave.id} className="hover:bg-gray-50">
+            <TableRow key={leave._id} className="hover:bg-gray-50">
               
               <TableCell className="px-6 py-4">
-                {leave.name}
+                {leave.leaveName}
               </TableCell>
 
               <TableCell className="px-6 py-4 text-gray-500">
-                {leave.type}
+                {leave.leaveType}
               </TableCell>
 
               <TableCell className="px-6 py-4">
-                {leave.days}
+                {leave.creditedDays}
               </TableCell>
 
               {/* Status */}
-              <TableCell className="px-6 py-4">
-                <span
+              {/* <TableCell className="px-6 py-4"> */}
+                {/* <span
                   className={`px-3 py-1 text-xs rounded-full border
                   ${
-                    leave.status === "Active"
-                      ? "text-green-600 border-green-400 bg-green-50"
-                      : "text-yellow-600 border-yellow-400 bg-yellow-50"
+                    // leave.status === "Active"
+                      // ? "text-green-600 border-green-400 bg-green-50"
+                      // : "text-yellow-600 border-yellow-400 bg-yellow-50"
                   }`}
                 >
-                  {leave.status}
-                </span>
-              </TableCell>
+                  
+                </span> */}
+              {/* </TableCell> */}
 
               {/* Actions */}
               <TableCell className="px-6 py-4 text-right">
                 <div className="flex justify-end gap-4">
-                  <Pencil className="w-4 h-4 text-blue-500 cursor-pointer" />
-                  <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+                  <Pencil className="w-4 h-4 text-blue-500 cursor-pointer" onClick={()=> onEdit(leave)}/>
+                  <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" onClick={()=> onDelete(leave._id)}/>
                 </div>
               </TableCell>
 

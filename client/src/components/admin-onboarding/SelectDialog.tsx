@@ -21,15 +21,7 @@ const SelectDialog = ({ children, title, isOpen, onOpenChange }: SelectDialogPro
             </DialogTitle>
           </DialogHeader>
             {children}
-          <div className="flex gap-6 items-center justify-center mt-10">
-            <Button className="bg-white px-14 border border-blue-600 text-blue-600 cursor-pointer"
-            onClick={()=>onOpenChange(false)}>
-              Cancel
-            </Button>
-            <Button className="px-14 border cursor-pointer border-blue-500">
-              Send
-            </Button>
-          </div>
+          
         </GradientContainer>
 
       </DialogContent>
