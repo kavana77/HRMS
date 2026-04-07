@@ -15,8 +15,7 @@ import {type LeaveResponseType } from "@/lib/zodSchema"
 
 const LeavePage = () => {
     const navigate = useNavigate()
-    const [selectedLeave, setSelectedLeave] = useState<LeaveResponseType | null>(null)
-    const { leaves, deleteLeave, updateLeave } = useLeave()
+    const { leaves, deleteLeave } = useLeave()
     const [selectedHoliday, setSelectedHoliday] = useState<any>(null)
     const { addHoliday, holidays, deleteHoliday, updateHoliday } = useHoliday()
     const { register, handleSubmit, reset } = useForm<{ holidayName: string, holidayDate: string }>()
@@ -30,8 +29,7 @@ const LeavePage = () => {
             console.error("Failed to delete leave", error)
         }
     }
-const handleEditLeave = (leave: any) => {
-  setSelectedLeave(leave)
+const handleEditLeave = (leave: LeaveResponseType) => {
   navigate('/leave/add-leave', {
   state: leave
 })

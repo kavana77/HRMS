@@ -6,14 +6,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { LeaveResponseType, LeaveTypeType } from "@/lib/zodSchema"
+import type { LeaveResponseType} from "@/lib/zodSchema"
 import { Pencil, Trash2 } from "lucide-react"
 
 
  type LeaveTableProps = {
   leaves: LeaveResponseType[] 
   onDelete: (id: string) => void
-  onEdit: (leave: LeaveTypeType) => void
+  onEdit: (leave: LeaveResponseType) => void
 }
 
 const LeaveTable = ({ leaves=[], onDelete, onEdit }: LeaveTableProps) => {

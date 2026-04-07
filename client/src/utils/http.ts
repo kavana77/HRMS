@@ -1,5 +1,4 @@
 import type { AdminLoginType, LeaveTypeType } from "@/lib/zodSchema"
-import { useAsyncValue } from "react-router-dom"
 
 export interface AdminSignUp {
     fullName: string,
@@ -11,7 +10,7 @@ export interface AdminSignUp {
 } 
 const authorizedFetch = async(endpoint: string, options: RequestInit={})=>{
     const token = localStorage.getItem("token")
-    const response = await fetch(`http://localhost:4000/api${endpoint}`,{
+    const response = await fetch(`https://hrms-6-inr1.onrender.com/api${endpoint}`,{
         ...options,
         headers:{
             "Content-Type": "application/json",
