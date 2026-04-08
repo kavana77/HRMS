@@ -57,6 +57,24 @@ export const getLeaveById:RequestHandler = async (req ,res) => {
         return res.status(500).json({message: "Internal Server Error"})
     }
 }
+export const updateLeaveStatus:RequestHandler = async(req , res)=>{
+    try {
+        const {id} = req.params
+        const {status} = req.body
+        const leave = await Leave.findByIdAndUpdate(
+            id,
+            {status},
+            {new: true}
+        )
+        if(!leave){
+            return res.status(404).json({message: "Leave not found"})
+        }
+        return res.status(200).json({message: "Leave status updated successfully", data: leave})
+    } catch (error) {
+        console.error("Failed to update leave status", error)
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+}
 export const updateLeave:RequestHandler = async(req , res) =>{
     try {
         const {id} = req.params

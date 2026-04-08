@@ -93,3 +93,9 @@ export const getLeaveById = async(id: string) => {
         method: "GET"
     })
 }
+export const updateLeaveStatus = async(id: string, status: string)=>{
+    return authorizedFetch(`/leave/update-status/${id}`,{
+        method: "PUT",
+        body: JSON.stringify({status})
+    })
+}

@@ -1,3 +1,4 @@
+import { Switch } from "@/components/ui/switch"
 import {
   Table,
   TableBody,
@@ -10,13 +11,15 @@ import type { LeaveResponseType} from "@/lib/zodSchema"
 import { Pencil, Trash2 } from "lucide-react"
 
 
+
  type LeaveTableProps = {
   leaves: LeaveResponseType[] 
   onDelete: (id: string) => void
   onEdit: (leave: LeaveResponseType) => void
+  onStatusChange: (id: string, status: "Active" | "Inactive")=> void
 }
 
-const LeaveTable = ({ leaves=[], onDelete, onEdit }: LeaveTableProps) => {
+const LeaveTable = ({ leaves=[], onDelete, onEdit, onStatusChange }: LeaveTableProps) => {
   return (
     <div className="rounded-xl border overflow-hidden">
       <Table> 
@@ -49,18 +52,31 @@ const LeaveTable = ({ leaves=[], onDelete, onEdit }: LeaveTableProps) => {
               </TableCell>
 
               {/* Status */}
-              {/* <TableCell className="px-6 py-4"> */}
-                {/* <span
+              <TableCell className="px-6 py-4 flex items-center gap-4">
+                {/* toggle */}
+                <Switch 
+
+                checked={leave.status === "Active"}
+                
+                onCheckedChange={(checked) => {
+                  const newStatus = checked ? "Active" : "Inactive"
+                  console.log("CLICKED:", leave._id, newStatus) 
+                  onStatusChange(leave._id, newStatus)
+                  
+                }
+                } className="data-unchecked:bg-[#BFD5FB] data-checked:bg-blue-600" />
+                {/* label */}
+                <span
                   className={`px-3 py-1 text-xs rounded-full border
                   ${
-                    // leave.status === "Active"
-                      // ? "text-green-600 border-green-400 bg-green-50"
-                      // : "text-yellow-600 border-yellow-400 bg-yellow-50"
+                    leave.status === "Active"
+                      ? "text-green-600 border-green-400 bg-green-50"
+                      : "text-yellow-600 border-yellow-400 bg-yellow-50"
                   }`}
                 >
-                  
-                </span> */}
-              {/* </TableCell> */}
+                  {leave.status}
+                </span>
+              </TableCell>
 
               {/* Actions */}
               <TableCell className="px-6 py-4 text-right">

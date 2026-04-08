@@ -1,5 +1,5 @@
 import type { LeaveTypeType } from "@/lib/zodSchema"
-import { addLeave, deleteLeave, editLeave, getLeaveById, getLeaves } from "@/utils/http"
+import { addLeave, deleteLeave, editLeave, getLeaveById, getLeaves, updateLeaveStatus } from "@/utils/http"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const useLeave = () =>{
@@ -31,12 +31,19 @@ export const useLeave = () =>{
     queryClient.invalidateQueries({ queryKey: ["leaves"] })
   }
     })
+    const updateLeaveStatusMutation = useMutation({
+        mutationFn: ({id, status}: {id: string, status: string}) => updateLeaveStatus(id, status),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["leaves"] })
+        }
+    })
 
     return {
         addLeave: leaveMutations.mutateAsync,
         leaves,
         leaveById,
         deleteLeave: deleteLeaveMutation.mutateAsync,
-        updateLeave: updateLeaveMutation.mutateAsync
+        updateLeave: updateLeaveMutation.mutateAsync,
+        updateLeaveStatus: updateLeaveStatusMutation.mutateAsync
     }
 }

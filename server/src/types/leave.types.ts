@@ -10,6 +10,7 @@ export interface Leave extends Document {
     resetDate: string,
     carryForward: boolean,
     encashUnused: boolean,
+    status: string,
     createdAt: Date,
     updatedAt: Date
 }

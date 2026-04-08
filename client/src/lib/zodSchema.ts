@@ -50,7 +50,7 @@ resetType: z.enum(["Monthly", "Yearly", "None"], {
 }),
 
   resetDate: dateSchema,
-
+  status: z.enum(["Active", "Inactive"]),
   carryForward: z.boolean().optional(),
   encashUnused: z.boolean().optional()
 })

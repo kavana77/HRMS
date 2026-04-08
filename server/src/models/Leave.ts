@@ -42,6 +42,11 @@ const leaveSchema = new mongoose.Schema<Leave>(
         encashUnused: {
             type: Boolean,
             default: false
+        },
+        status:{
+            type: String,
+            enum: ["Active", "Inactive"],
+            default: "Active"
         }
     },
     {timestamps: true}

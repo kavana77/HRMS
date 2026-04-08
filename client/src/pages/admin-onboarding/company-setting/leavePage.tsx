@@ -15,13 +15,20 @@ import {type LeaveResponseType } from "@/lib/zodSchema"
 
 const LeavePage = () => {
     const navigate = useNavigate()
-    const { leaves, deleteLeave } = useLeave()
+    const { leaves, deleteLeave,updateLeaveStatus } = useLeave()
     const [selectedHoliday, setSelectedHoliday] = useState<any>(null)
     const { addHoliday, holidays, deleteHoliday, updateHoliday } = useHoliday()
     const { register, handleSubmit, reset } = useForm<{ holidayName: string, holidayDate: string }>()
     const [isOpen, setIsOpen] = useState(false)
     const [tab, setTab] = useState("company")
 
+    const handleStatusChange = async(id: string, status: "Active" | "Inactive")=>{
+        try {
+            await updateLeaveStatus({id, status})
+        } catch (error) {
+            console.error("Failed to update status", error)
+        }
+    }
     const handleDeleteLeave = async (id: string) => {
         try {
             await deleteLeave(id)
@@ -82,6 +89,7 @@ const handleEditLeave = (leave: LeaveResponseType) => {
                         leaves={leaves}
                         onDelete={handleDeleteLeave}
                         onEdit={handleEditLeave}
+                        onStatusChange={handleStatusChange}
                     />)}
                 </div>
             }
@@ -96,6 +104,7 @@ const handleEditLeave = (leave: LeaveResponseType) => {
                     </div>
                     {/* Empty State */}
                     {Array.isArray(holidays) && holidays.length === 0 ? (<EmptyState />) : (<HolidayList
+
                         holidays={holidays || []}
                         onDelete={handleDeleteHoliday}
                         onEdit={(holiday) => {
