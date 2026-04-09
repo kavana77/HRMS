@@ -29,7 +29,7 @@ const LeaveTable = ({ leaves=[], onDelete, onEdit, onStatusChange }: LeaveTableP
             <TableHead className="px-6 py-3">Leave Name</TableHead>
             <TableHead className="px-6 py-3">Type</TableHead>
             <TableHead className="px-6 py-3">Number of Days</TableHead>
-            <TableHead className="px-6 py-3">Status</TableHead>
+            <TableHead className="px-14 py-3">Status</TableHead>
             <TableHead className="px-6 py-3 text-right"></TableHead>
           </TableRow>
         </TableHeader>
@@ -47,7 +47,7 @@ const LeaveTable = ({ leaves=[], onDelete, onEdit, onStatusChange }: LeaveTableP
                 {leave.leaveType}
               </TableCell>
 
-              <TableCell className="px-6 py-4">
+              <TableCell className="px-15 py-4">
                 {leave.creditedDays}
               </TableCell>
 
@@ -64,7 +64,7 @@ const LeaveTable = ({ leaves=[], onDelete, onEdit, onStatusChange }: LeaveTableP
                   onStatusChange(leave._id, newStatus)
                   
                 }
-                } className="data-unchecked:bg-[#BFD5FB] data-checked:bg-blue-600" />
+                } className="data-unchecked:bg-[#BFD5FB] data-checked:bg-blue-500" />
                 {/* label */}
                 <span
                   className={`px-3 py-1 text-xs rounded-full border

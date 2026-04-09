@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import crypto from "crypto";
 import env from "../utils/validateEnv"
 
@@ -21,7 +21,7 @@ export const generateSignature = (paramsToSign: Record<string, string | number>)
   return crypto.createHash("sha1").update(sortedParams + api_secret).digest("hex");
 };
 
-export const uploadToCloudinary = async (filePath: string) => {
+export const uploadToCloudinary = async (filePath: string, resourceType: "image" | "raw" = "image"):Promise<UploadApiResponse> => {
   try {
     cloudinaryConfig();
 
@@ -30,6 +30,7 @@ export const uploadToCloudinary = async (filePath: string) => {
     const signature = generateSignature(paramsToSign);
 
     const result = await cloudinary.uploader.upload(filePath, {
+      resource_type: resourceType,
       ...paramsToSign,
       signature,
       api_key: process.env.CLOUDINARY_API_KEY,
@@ -37,6 +38,7 @@ export const uploadToCloudinary = async (filePath: string) => {
 
     return result;
   } catch (error) {
-    console.error("Cloudinary upload error:", error);
+    console.error("Cloudinary upload error:", error)
+    throw error;
   }
 };
