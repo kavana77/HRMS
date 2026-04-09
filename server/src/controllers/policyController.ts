@@ -36,7 +36,8 @@ export const createPolicy:RequestHandler = async(req , res)=>{
 
 export const getPolicies:RequestHandler = async(req ,res) => {
     try {
-        
+        const policy = await Policy.find().sort({createdAt: -1})
+        return res.status(201).json({message: "Policy data fetched successfully", policy})
     } catch (error) {
         console.error("Failed to get policies", error)
         return res.status(500).json({message: "Internal Server Error"})
