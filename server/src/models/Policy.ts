@@ -29,8 +29,7 @@ const policySchema = new mongoose.Schema<IPolicy>(
             type: String,
             enum: ["Active", "Draft"]
         }
-    }
-    ,{timestamps: true}
+    },{timestamps: true}
 )
 const Policy = mongoose.model("Policy", policySchema)
 export default Policy

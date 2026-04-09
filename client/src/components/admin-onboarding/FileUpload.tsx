@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 type UploadStatus = "idle" | "uploading" | "success" | "error"
 type FileUpload = {
   uploadTypes: "image" | "document"
+  onFileChange?: (file: File) =>  void
 }
 const uploadConfig = {
   image: {
@@ -20,7 +21,7 @@ const uploadConfig = {
 }
 
 
-const FileUploads = ({uploadTypes}:FileUpload) => {
+const FileUploads = ({uploadTypes,onFileChange}:FileUpload) => {
   const config = uploadConfig[uploadTypes]
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
@@ -29,7 +30,9 @@ const FileUploads = ({uploadTypes}:FileUpload) => {
  const MAX_SIZE = config.maxSize
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
-
+    if(selected && onFileChange){
+      onFileChange(selected)
+    }
     if (!selected) return
 
     if (selected.size > MAX_SIZE) {

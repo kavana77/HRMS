@@ -61,7 +61,19 @@ resetType: z.enum(["Monthly", "Yearly", "None"], {
 export type LeaveResponseType = LeaveTypeType & {
   _id: string
 }
+export const policySchema = z.object({
+    policyName: z.string().trim().min(2, "Policy name must be at least 2 characters"),
+    category: z.enum(["HR", "Finance", "IT", "Security", "Compliance"], {
+        message: "Category must be one"
+    }),
+    effectiveFrom: dateSchema,
+    documentUrl: z.string().url().optional(),
+    publicId: z.string().optional(),
+    status: z.enum(["Active", "Draft"])
+})
+
 export type AdminSignUpType = z.infer<typeof adminSignupSchema>
 export type AdminLoginType = z.infer<typeof adminLoginSchema>
 export type CompanysetupForm = z.infer<typeof companysetupForm>
 export type LeaveTypeType = z.infer<typeof leaveTypeSchema>
+export type PolicyType = z.infer<typeof policySchema>

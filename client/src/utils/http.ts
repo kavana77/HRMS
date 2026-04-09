@@ -99,3 +99,25 @@ export const updateLeaveStatus = async(id: string, status: string)=>{
         body: JSON.stringify({status})
     })
 }
+
+export const uploadPolicy = async(data: {
+    policyName: string;
+    category: string;
+    effectiveFrom: string;
+    status: "Active" | "Draft"
+},file?: File)=>{
+    const formData = new FormData()
+    formData.append("policyName", data.policyName);
+    formData.append("category", data.category);
+    formData.append("effectiveFrom", data.effectiveFrom);
+    formData.append("status", data.status)
+
+    if(file){
+        formData.append("file", file)
+    }
+    return authorizedFetch("/policy/create",{
+        method: "POST",
+        body: formData,
+
+    })
+}
