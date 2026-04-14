@@ -38,7 +38,7 @@ export const adminSignup = async (data: AdminSignUp) => {
   // store companyName for later use
   localStorage.setItem("companyName", data.companyName);
 
-  const response = await fetch("http://localhost:4000/api/auth/admin/signup", {
+  const response = await fetch("https://hrms-6-inr1.onrender.com/api/auth/admin/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
