@@ -11,4 +11,5 @@ router.get("/get-all", leaveController_1.getLeaves);
 router.get("/get/:id", leaveController_1.getLeaveById);
 router.put("/update/:id", leaveController_1.updateLeave);
 router.delete("/delete/:id", leaveController_1.deleteLeave);
+router.put("/update-status/:id", leaveController_1.updateLeaveStatus);
 exports.default = router;

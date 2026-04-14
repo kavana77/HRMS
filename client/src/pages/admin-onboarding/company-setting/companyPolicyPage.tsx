@@ -1,4 +1,5 @@
 import EmptyState from "@/components/admin-onboarding/company-setting/EmptyState"
+import PolicyList from "@/components/admin-onboarding/company-setting/PolicyList"
 import FileUploads from "@/components/admin-onboarding/FileUpload"
 import SelectDialog from "@/components/admin-onboarding/SelectDialog"
 import { Button } from "@/components/ui/button"
@@ -17,8 +18,8 @@ const CompanyPolicyPage = () => {
     const [file, setFile] = useState<File | null>(null)
     const [isOpen, setIsOpen] = useState(false)
     const {handleSubmit, register, setValue,reset} = useForm<PolicyType>()
-    const {createPolicy}=usePolicy()
-    const policies: any[] = []
+    const {createPolicy, Policy,deletePolicy}=usePolicy()
+    
     const onSubmit = async(formData: PolicyType) =>{
         try {
             await createPolicy({data: formData, file: file || undefined})
@@ -42,7 +43,9 @@ const CompanyPolicyPage = () => {
                     <Button onClick={() => setIsOpen(true)} className="cursor-pointer">+ Add Policy</Button>
                 </div>
                 {/* Empty State */}
-                {policies.length === 0 && <EmptyState />}
+                {Array.isArray(Policy) && Policy.length === 0 ?<EmptyState />:<PolicyList
+                policies={Policy}
+                onDelete={deletePolicy}/>}
             </div>
             <SelectDialog
                 isOpen={isOpen}
@@ -91,7 +94,7 @@ const CompanyPolicyPage = () => {
                               Cancel
                             </Button>
                           
-                            <Button type="submit" className="px-8 bg-blue-600 hover:bg-blue-700">
+                            <Button type="submit" className="px-8 cursor-pointer bg-blue-600 hover:bg-blue-700">
                               Save
                             </Button>
                             

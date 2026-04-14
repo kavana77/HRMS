@@ -9,7 +9,10 @@ const companySchema = new mongoose.Schema<CompanyDocument>({
     companyLogo: {
         type: String,
     },
-    address: {
+    publicId:{
+        type: String
+    },
+    registeredAddress: {
         type: String,
         required: true
     },
@@ -30,5 +33,5 @@ const companySchema = new mongoose.Schema<CompanyDocument>({
         ref: "User",
         // required: true
     }
-})
+},{timestamps: true})
 export default mongoose.model("Company", companySchema)

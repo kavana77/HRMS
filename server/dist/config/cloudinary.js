@@ -24,13 +24,14 @@ const generateSignature = (paramsToSign) => {
     return crypto_1.default.createHash("sha1").update(sortedParams + api_secret).digest("hex");
 };
 exports.generateSignature = generateSignature;
-const uploadToCloudinary = async (filePath) => {
+const uploadToCloudinary = async (filePath, resourceType = "image") => {
     try {
         (0, exports.cloudinaryConfig)();
         const timestamp = Math.round(new Date().getTime() / 1000);
         const paramsToSign = { timestamp };
         const signature = (0, exports.generateSignature)(paramsToSign);
         const result = await cloudinary_1.v2.uploader.upload(filePath, {
+            resource_type: resourceType,
             ...paramsToSign,
             signature,
             api_key: process.env.CLOUDINARY_API_KEY,
@@ -39,6 +40,7 @@ const uploadToCloudinary = async (filePath) => {
     }
     catch (error) {
         console.error("Cloudinary upload error:", error);
+        throw error;
     }
 };
 exports.uploadToCloudinary = uploadToCloudinary;

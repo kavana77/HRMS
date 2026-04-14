@@ -2,38 +2,92 @@ import type { AdminLoginType, LeaveTypeType } from "@/lib/zodSchema"
 
 export interface AdminSignUp {
     fullName: string,
-    companyName: string,
     email: string,
+    companyName: string,
     phoneNumber: string,
     password: string,
     confirmPassword: string
 } 
-const authorizedFetch = async(endpoint: string, options: RequestInit={})=>{
-    const token = localStorage.getItem("token")
-    const response = await fetch(`https://hrms-6-inr1.onrender.com/api${endpoint}`,{
-        ...options,
-        headers:{
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            ...options.headers
-        }
-    })
-    if(!response.ok){
-        const error = await response.json()
-        throw new Error(error.message || "Access denied")
-    }
-    return response.json()
-}
-export const adminSignup = async(data:AdminSignUp)=>{
- return authorizedFetch("/auth/admin/signup",{
+
+const authorizedFetch = async (endpoint: string, options: RequestInit = {}) => {
+  const token = localStorage.getItem("token");
+
+  const headers: any = {
+    Authorization: `Bearer ${token}`,
+    ...options.headers
+  };
+
+  //Only set JSON header if NOT FormData
+  if (!(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const response = await fetch(`http://localhost:4000/api${endpoint}`, {
+    ...options,
+    headers
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Request failed");
+  }
+
+  return response.json();
+};
+export const adminSignup = async (data: AdminSignUp) => {
+  // store companyName for later use
+  localStorage.setItem("companyName", data.companyName);
+
+  const response = await fetch("http://localhost:4000/api/auth/admin/signup", {
     method: "POST",
-    body: JSON.stringify(data)
- })
-}
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      fullName: data.fullName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      password: data.password,
+      confirmPassword: data.confirmPassword
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Signup failed");
+  }
+
+  return response.json();
+};
 export const adminLogin = async(data: AdminLoginType)=>{
     return authorizedFetch("/auth/admin/login",{
         method: "POST",
         body: JSON.stringify(data)
+    })
+}
+export const companySetup = async (
+    data: {
+        companyName: string,
+        registeredAddress: string,
+        pincode: string,
+        state: string,
+        country: string
+    },
+    file?: File
+)=>{
+    const formData = new FormData()
+
+    formData.append("companyName", data.companyName)
+    formData.append("registeredAddress", data.registeredAddress)
+    formData.append("pincode", data.pincode)
+    formData.append("state", data.state)
+    formData.append("country", data.country)
+    if(file){
+        formData.append("image", file)
+    }
+    return authorizedFetch("/company/setup-company",{
+        method:"POST",
+        body: formData
     })
 }
 
@@ -119,5 +173,15 @@ export const uploadPolicy = async(data: {
         method: "POST",
         body: formData,
 
+    })
+}
+export const getPolicies = async()=>{
+    return authorizedFetch("/policy/get",{
+        method:"GET"
+    })
+}
+export const deletePolicy = (id:string)=>{
+    return authorizedFetch(`/policy/delete/${id}`,{
+        method: "DELETE"
     })
 }

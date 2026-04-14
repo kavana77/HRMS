@@ -1,7 +1,7 @@
 import VerifyEmailCard from "@/components/admin-onboarding/auth/VerifyEmailCard"
 import GradientContainer from "@/components/admin-onboarding/GradientContainer"
 import { Button } from "@/components/ui/button"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 
 const VerifyEmailPage = () => {
@@ -24,16 +24,15 @@ const VerifyEmailPage = () => {
           variant="outline"
           className="px-6 border-blue-600 text-blue-600 cursor-pointer"
         >
-          Back
+         <Link to="/admin/signup">Back</Link> 
         </Button>
-
-        <Button className="px-6 bg-blue-600 hover:bg-blue-700 cursor-pointer">
-          Login
-        </Button>
+        <Button  className="px-6 bg-blue-600 hover:bg-blue-700">
+  <Link to="/admin/login">Login</Link>
+</Button>
       </div>
         {/* GRID BACKGROUND */}
             <div
-                className="absolute inset-0
+                className="absolute inset-0 pointer-events-none
                 bg-[linear-gradient(to_right,#e5e7eb_2px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_2px,transparent_1px)]
                 bg-[size:48px_48px]
                 [mask-image:radial-gradient(circle_at_center,black_25%,transparent_70%)]"

@@ -10,7 +10,11 @@ import {
 } from "@/components/ui/select"
 import { Label } from "../ui/label"
 
-const LocationSelector = () => {
+type LocationSelectorProps = {
+  setCountry: (value: string)=>void
+  setState: (value: string)=> void
+}
+const LocationSelector = ({setCountry,setState}:LocationSelectorProps) => {
 
   const countries = Country.getAllCountries()
 
@@ -40,6 +44,9 @@ const LocationSelector = () => {
             setCountryName(selectedCountry.name)
             setCountryCode(selectedCountry.isoCode)
             setStateName("")
+
+            setCountry(selectedCountry.name)
+            setState("")
           }}
         >
           <SelectTrigger className="w-full h-16 py-5 rounded-md">
@@ -67,6 +74,7 @@ const LocationSelector = () => {
           onValueChange={(value) => {
             if (!value) return
             setStateName(value)
+            setState(value)
           }}
           disabled={!countryCode}
         >

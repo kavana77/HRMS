@@ -2,19 +2,22 @@ import { useState } from "react"
 import { Button } from "../../ui/button"
 import { Input } from "../../ui/input"
 import { Label } from "../../ui/label"
-import { Eye, EyeOff } from "lucide-react"
+import { AlertTriangle, Eye, EyeOff } from "lucide-react"
 import Logo from "../../../assets/magure-logo.png"
 import type { AdminLoginType } from "@/lib/zodSchema"
 import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
+import { Link } from "react-router-dom"
 type LoginProps = {
   onSubmit: (data: AdminLoginType) => void
   register: UseFormRegister<AdminLoginType>
   handleSubmit: UseFormHandleSubmit<AdminLoginType>
   errors: FieldErrors<AdminLoginType>
   isSubmitting: boolean
+  apiError?: string | null
+  setApiError: (value: string | null) => void
 }
 
-const LoginForm = ({onSubmit, register, handleSubmit, errors, isSubmitting}:LoginProps) => {
+const LoginForm = ({onSubmit, register, handleSubmit, errors, isSubmitting, apiError,setApiError}:LoginProps) => {
     const [showPassword, setShowPassword] = useState(false)
     return(
     <div>
@@ -25,6 +28,13 @@ const LoginForm = ({onSubmit, register, handleSubmit, errors, isSubmitting}:Logi
           Sign in to manage your organization’s HR system.
         </p>
       </div>
+      {apiError && (
+  <div className="bg-red-100 mb-4 relative text-red-600 px-4 py-2 rounded-md text-sm flex  items-center">
+    <AlertTriangle className="h-4 w-4 mr-3"/>
+    <span>{apiError}</span>
+    <button onClick={() => setApiError(null)} className="absolute right-4  cursor-pointer">✕</button>
+  </div>
+)}
        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Email */}
         <div>
@@ -74,14 +84,14 @@ const LoginForm = ({onSubmit, register, handleSubmit, errors, isSubmitting}:Logi
           </div>
         </div>
         {/* Button */}
-        <Button disabled={isSubmitting} className="w-full">{isSubmitting?"Loging...": "Log in"}</Button>
+        <Button  type="submit" disabled={isSubmitting} className="w-full cursor-pointer">{isSubmitting?"Loging...": "Log in"}</Button>
 
         {/* Signup */}
         <p className="text-center text-sm text-gray-500">
           Don’t have an account?{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">
+          <Link to="/admin/signup" className="text-blue-600 cursor-pointer hover:underline">
             Signup
-          </span>
+          </Link>
         </p>
       </form>
     </div>

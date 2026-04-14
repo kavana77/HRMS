@@ -10,17 +10,13 @@ const userSchema = new mongoose_1.default.Schema({
         required: true,
         trim: true
     },
-    companyName: {
-        type: String,
-        required: true,
-        trim: true
-    },
     email: {
         type: String,
         required: true,
         unique: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        index: true
     },
     phoneNumber: {
         type: String,
@@ -44,6 +40,11 @@ const userSchema = new mongoose_1.default.Schema({
     },
     verificationTokenExpiry: {
         type: Date
+    },
+    companyId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "Company",
+        default: null
     }
 }, {
     timestamps: true

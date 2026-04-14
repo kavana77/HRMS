@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLeave = exports.updateLeave = exports.getLeaveById = exports.getLeaves = exports.createLeaves = void 0;
+exports.deleteLeave = exports.updateLeave = exports.updateLeaveStatus = exports.getLeaveById = exports.getLeaves = exports.createLeaves = void 0;
 const Leave_1 = __importDefault(require("../models/Leave"));
 const createLeaves = async (req, res) => {
     try {
@@ -62,6 +62,22 @@ const getLeaveById = async (req, res) => {
     }
 };
 exports.getLeaveById = getLeaveById;
+const updateLeaveStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const leave = await Leave_1.default.findByIdAndUpdate(id, { status }, { new: true });
+        if (!leave) {
+            return res.status(404).json({ message: "Leave not found" });
+        }
+        return res.status(200).json({ message: "Leave status updated successfully", data: leave });
+    }
+    catch (error) {
+        console.error("Failed to update leave status", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+exports.updateLeaveStatus = updateLeaveStatus;
 const updateLeave = async (req, res) => {
     try {
         const { id } = req.params;

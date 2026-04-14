@@ -44,6 +44,11 @@ const leaveSchema = new mongoose_1.default.Schema({
     encashUnused: {
         type: Boolean,
         default: false
+    },
+    status: {
+        type: String,
+        enum: ["Active", "Inactive"],
+        default: "Active"
     }
 }, { timestamps: true });
 const Leave = mongoose_1.default.model("Leave", leaveSchema);

@@ -12,7 +12,10 @@ const companySchema = new mongoose_1.default.Schema({
     companyLogo: {
         type: String,
     },
-    address: {
+    publicId: {
+        type: String
+    },
+    registeredAddress: {
         type: String,
         required: true
     },
@@ -33,5 +36,5 @@ const companySchema = new mongoose_1.default.Schema({
         ref: "User",
         // required: true
     }
-});
+}, { timestamps: true });
 exports.default = mongoose_1.default.model("Company", companySchema);

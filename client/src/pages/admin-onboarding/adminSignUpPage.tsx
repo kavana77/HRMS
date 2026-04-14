@@ -4,20 +4,24 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import GradientContainer from "@/components/admin-onboarding/GradientContainer"
 import { useAuth } from "@/hooks/useAuth"
+import { useNavigate } from "react-router-dom"
 
 const AdminSignUpPage = () => {
     const {signup} = useAuth()
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AdminSignUpType>({
+    const navigate = useNavigate()
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } ,setValue} = useForm<AdminSignUpType>({
         resolver: zodResolver(adminSignupSchema)
     })
 
     const onSubmit = async (data: AdminSignUpType) => {
         try {
+            localStorage.setItem("companyName",data.companyName)
             await signup(data)
             console.log("Signed in successfully", data)
             reset()
+            navigate('/admin/verify-email')
         } catch (error) {
-            console.error("Failed to signup", data)
+            console.error("Failed to signup", error)
         }
     }
     return (
@@ -36,7 +40,8 @@ const AdminSignUpPage = () => {
                     handleSubmit={handleSubmit}
                     register={register}
                     errors={errors}
-                    isSubmitting={isSubmitting} />
+                    isSubmitting={isSubmitting} 
+                    setValue={setValue}/>
             </GradientContainer>
         </div>
     )

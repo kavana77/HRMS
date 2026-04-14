@@ -27,7 +27,8 @@ const policySchema = new mongoose.Schema<IPolicy>(
         },
         status: {
             type: String,
-            enum: ["Active", "Draft"]
+            enum: ["Active", "Draft"],
+            default: "Active"
         }
     },{timestamps: true}
 )

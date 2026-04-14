@@ -71,7 +71,9 @@ export const policySchema = z.object({
     publicId: z.string().optional(),
     status: z.enum(["Active", "Draft"])
 })
-
+export type PolicyResponseType = PolicyType & {
+  _id: string
+}
 export type AdminSignUpType = z.infer<typeof adminSignupSchema>
 export type AdminLoginType = z.infer<typeof adminLoginSchema>
 export type CompanysetupForm = z.infer<typeof companysetupForm>

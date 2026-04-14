@@ -3,21 +3,28 @@ import GradientContainer from "@/components/admin-onboarding/GradientContainer"
 import { useAuth } from "@/hooks/useAuth"
 import { adminLoginSchema, type AdminLoginType } from "@/lib/zodSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
     const {login} = useAuth()
+    const [apiError, setApiError] = useState<string | null>(null)
+    const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AdminLoginType>({
         resolver: zodResolver(adminLoginSchema)
     })
 
     const onSubmit = async (data: AdminLoginType) => {
         try {
+            setApiError(null)
             await login(data)
             console.log("Logged in sucessfully", data)
             reset()
-        } catch (error) {
-            console.error("Failed to login", data)
+            navigate("/admin/workspace-setup")
+        } catch (error:any) {
+            console.error("Failed to login", error)
+            setApiError(error.message || "Invalid email or password")
         }
     }
     return (
@@ -36,7 +43,9 @@ const LoginPage = () => {
                     errors={errors}
                     isSubmitting={isSubmitting}
                     handleSubmit={handleSubmit}
-                    register={register} />
+                    register={register}
+                    apiError={apiError} 
+                    setApiError={setApiError}/>
             </GradientContainer>
         </div>
     )

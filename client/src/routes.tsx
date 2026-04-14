@@ -30,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="login-confirmation" element={<LoginConfirmationPage />} />
         <Route path="workspace-setup" element={<WorkspaceSetupPage />} />
         <Route path="setup-company" element={<CompanyProfile />} />
+        
       </Route>
 
       {/* Admin Dashboard */}

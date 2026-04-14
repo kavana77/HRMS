@@ -8,6 +8,7 @@ import InviteAdmin from "@/components/admin-onboarding/SelectDialog"
 import { useState } from "react"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
+import { Button } from "@/components/ui/button"
 
 const WorkspaceSetupPage = () => {
   const navigate = useNavigate()
@@ -36,14 +37,14 @@ const WorkspaceSetupPage = () => {
           icon={<img src={FileIcon} className="w-8 h-8"/>}
           title="Company Profile"
           description="Add your company details like name, logo, and registered address."
-          onClick={() => navigate("/admin/company-profile")}
+          onClick={() => navigate("/admin/setup-company")}
         />
 
         <SetupStepCard
           icon={<img src={SettingIcon} className="w-8 h-8"/>}
           title="Company Settings"
           description="Configure attendance rules, leave policies, and payroll preferences."
-          onClick={() => navigate("/admin/company-settings")}
+          onClick={() => navigate("/dashboard")}
         />
 
         <SetupStepCard
@@ -57,8 +58,8 @@ const WorkspaceSetupPage = () => {
 
       {/* Dashboard Link */}
       <button
-        onClick={() => navigate("/admin/dashboard")}
-        className="mt-10 text-blue-600 text-sm hover:underline"
+        onClick={() => navigate("/dashboard")}
+        className="cursor-pointer mt-10 text-blue-600 text-sm hover:underline"
       >
         Go to Dashboard →
       </button>
@@ -77,7 +78,21 @@ const WorkspaceSetupPage = () => {
               </Label>
               <Input placeholder="e.g. abhinav@company.com" className="py-5" />
             </div>
-
+ {/* ACTION BUTTONS */}
+      <div className="flex gap-4 items-center justify-center mt-6">
+        
+        <Button
+          variant="outline"
+          className="px-12 border-blue-600 text-blue-600"
+          onClick={()=>setOpenInviteAdmin(false)}
+        >
+          Cancel
+        </Button>
+        
+        <Button type="submit" className="px-12 bg-blue-600  hover:bg-blue-700">
+          Save
+        </Button>
+        </div>
 
     </InviteAdmin>
    

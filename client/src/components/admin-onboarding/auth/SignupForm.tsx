@@ -3,9 +3,10 @@ import PhoneInput from "react-phone-number-input"
 import "react-phone-number-input/style.css"
 import { Eye, EyeClosed } from "lucide-react"
 import Logo from "../../../assets/magure-logo.png"
-import type { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
+import type { FieldErrors, UseFormHandleSubmit, UseFormRegister, UseFormSetValue } from "react-hook-form"
 import type { AdminSignUpType } from "@/lib/zodSchema"
 import { Button } from "../../ui/button"
+import { Link } from "react-router-dom"
 
 type SignupProps = {
   onSubmit: (data: AdminSignUpType) => void
@@ -13,6 +14,7 @@ type SignupProps = {
   handleSubmit: UseFormHandleSubmit<AdminSignUpType>
   errors: FieldErrors<AdminSignUpType>
   isSubmitting: boolean
+  setValue: UseFormSetValue<AdminSignUpType>
 }
 
 const SignupForm = ({
@@ -20,9 +22,10 @@ const SignupForm = ({
   handleSubmit,
   register,
   errors,
-  isSubmitting
+  isSubmitting,
+  setValue
 }: SignupProps) => {
-
+ 
   const [phone, setPhone] = useState<string | undefined>()
   const [passwordVisibility, setPasswordVisibility] = useState(false)
 
@@ -105,9 +108,10 @@ const SignupForm = ({
 
         <div className="flex items-center border border-input rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-ring">
           <PhoneInput
-          {...register("phoneNumber")}
             value={phone}
-            onChange={setPhone}
+            onChange={(value)=>{setPhone(value)
+              setValue("phoneNumber", value || "")
+            }}
             defaultCountry="IN"
             international
             className="w-full focus:outline-none text-sm text-gray-500"
@@ -180,6 +184,7 @@ const SignupForm = ({
       {/* Submit */}
       <div className="flex flex-col items-center gap-4 mt-6">
         <Button
+        type="submit"
           disabled={isSubmitting}
            className="w-full rounded-3xl cursor-pointer"
         >
@@ -188,9 +193,9 @@ const SignupForm = ({
 
         <p className="text-gray-500 text-sm">
           Already have an account?{" "}
-          <span className="text-[#3077F3] font-medium cursor-pointer">
+          <Link to="/admin/login" className="text-[#3077F3] font-medium cursor-pointer">
             Log in
-          </span>
+          </Link>
         </p>
       </div>
     </form>

@@ -1,15 +1,15 @@
 import { RequestHandler } from "express"
 import User from "../models/User"
 import bcrypt from "bcryptjs"
-import crypto from "crypto"
+// import crypto from "crypto"
 import env from "../utils/validateEnv"
 import jwt from "jsonwebtoken"
 import {sendEmail} from "../utils/sendEmail"
 
 export const adminSignup: RequestHandler = async (req, res) => {
     try {
-        const { fullName, companyName, email, phoneNumber, password, confirmPassword } = req.body
-        if (!fullName || !companyName || !email || !phoneNumber || !password || !confirmPassword) {
+        const { fullName, email, phoneNumber, password, confirmPassword } = req.body
+        if (!fullName|| !email || !phoneNumber || !password || !confirmPassword) {
             return res.status(400).json({ message: "All fields are required" })
         }
         if (password !== confirmPassword) {
@@ -26,41 +26,41 @@ export const adminSignup: RequestHandler = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
 
         // generate verification token
-        const verificationToken = crypto.randomBytes(32).toString("hex")
+        // const verificationToken = crypto.randomBytes(32).toString("hex")
 
         // token expiry (5min)
-        const verificationTokenExpiry = new Date(Date.now() + 5 * 60 * 1000)
+        // const verificationTokenExpiry = new Date(Date.now() + 5 * 60 * 1000)
         const newAdmin = new User({
             fullName,
-            companyName,
-            email,
+            // companyName,
+            email: email.toLowerCase(),
             phoneNumber,
             password: hashedPassword,
             role: "admin",
-            isVerified: false,
-            verificationToken,
-            verificationTokenExpiry
+            // isVerified: false,
+            // verificationToken,
+            // verificationTokenExpiry
         })
         await newAdmin.save()
 
         // verification link
-        const verifyLink = `${env.CLIENT_URL}/admin/verify-email?token=${verificationToken}`
+        // const verifyLink = `${env.CLIENT_URL}/admin/verify-email?token=${verificationToken}`
 
-         const subject = "Verify your email"
-    const text = `Click the link to verify your email: ${verifyLink}`
+        //  const subject = "Verify your email"
+    // const text = `Click the link to verify your email: ${verifyLink}`
 
-    const html = `
-      <h2>Email Verification</h2>
-      <p>Hello ${fullName},</p>
-      <p>Please click the button below to verify your email:</p>
-      <a href="${verifyLink}" style="padding:10px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;">
-        Verify Email
-      </a>
-      <p>This link will expire in 5 minutes.</p>
-    `
+    // const html = `
+    //   <h2>Email Verification</h2>
+    //   <p>Hello ${fullName},</p>
+    //   <p>Please click the button below to verify your email:</p>
+    //   <a href="${verifyLink}" style="padding:10px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;">
+    //     Verify Email
+    //   </a>
+    //   <p>This link will expire in 5 minutes.</p>
+    // `
 
     //  SEND EMAIL (IMPORTANT FIX)
-    await sendEmail(email, subject, text, html)
+    // await sendEmail(email, subject, text, html)
         return res.status(201).json({ message: "Signup successful. Please verify your email ", email: newAdmin.email })
     } catch (error) {
         console.error(error)
