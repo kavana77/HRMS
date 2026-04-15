@@ -8,8 +8,8 @@ import {sendEmail} from "../utils/sendEmail"
 
 export const adminSignup: RequestHandler = async (req, res) => {
     try {
-        const { fullName, email, phoneNumber, password, confirmPassword } = req.body
-        if (!fullName|| !email || !phoneNumber || !password || !confirmPassword) {
+        const { fullName, email, companyName,phoneNumber, password, confirmPassword } = req.body
+        if (!fullName|| !email || !companyName || !phoneNumber || !password || !confirmPassword) {
             return res.status(400).json({ message: "All fields are required" })
         }
         if (password !== confirmPassword) {
@@ -32,7 +32,7 @@ export const adminSignup: RequestHandler = async (req, res) => {
         // const verificationTokenExpiry = new Date(Date.now() + 5 * 60 * 1000)
         const newAdmin = new User({
             fullName,
-            // companyName,
+            companyName,
             email: email.toLowerCase(),
             phoneNumber,
             password: hashedPassword,

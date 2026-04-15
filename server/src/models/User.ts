@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema<User>(
             required: true,
             trim: true
         },
+        companyName:{
+            type: String,
+            required: true
+        },
         email: {
             type: String,
             required: true,

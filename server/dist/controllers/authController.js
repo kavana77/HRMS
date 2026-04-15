@@ -11,8 +11,8 @@ const validateEnv_1 = __importDefault(require("../utils/validateEnv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const adminSignup = async (req, res) => {
     try {
-        const { fullName, email, phoneNumber, password, confirmPassword } = req.body;
-        if (!fullName || !email || !phoneNumber || !password || !confirmPassword) {
+        const { fullName, email, companyName, phoneNumber, password, confirmPassword } = req.body;
+        if (!fullName || !email || !companyName || !phoneNumber || !password || !confirmPassword) {
             return res.status(400).json({ message: "All fields are required" });
         }
         if (password !== confirmPassword) {
@@ -33,7 +33,7 @@ const adminSignup = async (req, res) => {
         // const verificationTokenExpiry = new Date(Date.now() + 5 * 60 * 1000)
         const newAdmin = new User_1.default({
             fullName,
-            // companyName,
+            companyName,
             email: email.toLowerCase(),
             phoneNumber,
             password: hashedPassword,
