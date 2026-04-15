@@ -81,7 +81,13 @@ export const adminLogin: RequestHandler = async (req, res) => {
         }
         const token = jwt.sign({ id: user._id, role: user.role }, env.JWT_SECRET, { expiresIn: "1h" })
         console.log(token)
-        return res.status(200).json({ token: token })
+        return res.status(200).json({ token: token,
+            user: {
+                fullName: user.fullName,
+                email: user.email,
+                companyName: user.companyName
+            }
+         })
     } catch (error) {
         console.error("Error in login", error)
         return res.status(500).json({ meesage: "Internal Server error" })

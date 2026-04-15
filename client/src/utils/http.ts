@@ -35,8 +35,7 @@ const authorizedFetch = async (endpoint: string, options: RequestInit = {}) => {
   return response.json();
 };
 export const adminSignup = async (data: AdminSignUp) => {
-  // store companyName for later use
-//   localStorage.setItem("companyName", data.companyName);
+ 
 
   const response = await fetch("https://hrms-6-inr1.onrender.com/api/auth/admin/signup", {
     method: "POST",
@@ -60,12 +59,18 @@ export const adminSignup = async (data: AdminSignUp) => {
 
   return response.json();
 };
-export const adminLogin = async(data: AdminLoginType)=>{
-    return authorizedFetch("/auth/admin/login",{
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-}
+export const adminLogin = async (data: AdminLoginType) => {
+  const res = await authorizedFetch("/auth/admin/login", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+  // store token
+  localStorage.setItem("token", res.token);
+  // store companyName (IMPORTANT)
+  localStorage.setItem("companyName", res.user.companyName);
+
+  return res;
+};
 export const companySetup = async (
     data: {
         companyName: string,

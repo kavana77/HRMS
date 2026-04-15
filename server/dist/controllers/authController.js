@@ -79,7 +79,13 @@ const adminLogin = async (req, res) => {
         }
         const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, validateEnv_1.default.JWT_SECRET, { expiresIn: "1h" });
         console.log(token);
-        return res.status(200).json({ token: token });
+        return res.status(200).json({ token: token,
+            user: {
+                fullName: user.fullName,
+                email: user.email,
+                companyName: user.companyName
+            }
+        });
     }
     catch (error) {
         console.error("Error in login", error);
