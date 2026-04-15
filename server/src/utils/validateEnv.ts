@@ -12,5 +12,4 @@ export default cleanEnv(process.env, {
     CLOUDINARY_UPLOAD_FOLDER: str(),
     EMAIL_USER: str(),
     EMAIL_PASSWORD: str(),
-    CLIENT_URL: str()
 })
