@@ -13,5 +13,4 @@ exports.default = (0, envalid_1.cleanEnv)(process.env, {
     CLOUDINARY_UPLOAD_FOLDER: (0, validators_1.str)(),
     EMAIL_USER: (0, validators_1.str)(),
     EMAIL_PASSWORD: (0, validators_1.str)(),
-    CLIENT_URL: (0, validators_1.str)()
 });
