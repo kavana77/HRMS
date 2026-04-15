@@ -96,6 +96,13 @@ export const companySetup = async (
         body: formData
     })
 }
+export const getCompanyProfile = ()=>{
+    return authorizedFetch("/company/get-company",{
+        method:"GET"
+    }
+        
+    )
+}
 
 export const addHoliday = async(data: {holidayName: string, holidayDate: string})=>{
     return authorizedFetch("/holiday/add",{

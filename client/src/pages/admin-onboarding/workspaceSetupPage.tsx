@@ -5,15 +5,28 @@ import SetupStepCard from "../../components/admin-onboarding/SetupStepCard"
 import { useNavigate } from "react-router-dom"
 import Logo from "../../assets/magure-logo.png"
 import InviteAdmin from "@/components/admin-onboarding/SelectDialog"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
 import { Button } from "@/components/ui/button"
+import { getCompanyProfile } from "@/utils/http"
 
 const WorkspaceSetupPage = () => {
   const navigate = useNavigate()
+  const [companyExists, setCompanyExists] = useState(false)
   const [openInviteAdmin, setOpenInviteAdmin] = useState(false)
+useEffect(() => {
+  const fetchCompany = async () => {
+    try {
+      const res = await getCompanyProfile();
+      setCompanyExists(res.data.exists);
+    } catch (error) {
+      console.error("Error fetching company", error);
+    }
+  };
 
+  fetchCompany();
+}, []);
   return (
     <div className="p-14 flex flex-col items-center justify-center bg-gray-50 ">
 
@@ -38,6 +51,7 @@ const WorkspaceSetupPage = () => {
           title="Company Profile"
           description="Add your company details like name, logo, and registered address."
           onClick={() => navigate("/admin/setup-company")}
+          isCompleted={companyExists}
         />
 
         <SetupStepCard

@@ -8,13 +8,14 @@ export const createCompanyProfile:RequestHandler = async(req ,res)=>{
         if(!companyName ||  !registeredAddress || !pincode || !state || !country){
             return res.status(400).json({message: "All fields are required"})
         }
-    //     const adminId = (req as any).userId;
-    //     const existingCompany = await Company.findOne({adminId})
-    //     if (existingCompany) {
-    //         return res.status(409).json({
-    //         message: "Company profile already exists"
-    //     })
-    // }
+        const adminId = (req as any).user?.id;
+        console.log("adminId:", (req as any).user);
+        const existingCompany = await Company.findOne({adminId})
+        if (existingCompany) {
+            return res.status(409).json({
+            message: "Company profile already exists"
+        })
+    }
         let companyLogo = ""
         let publicId = ""
         if(req.file){
@@ -30,13 +31,32 @@ export const createCompanyProfile:RequestHandler = async(req ,res)=>{
             pincode,
             state,
             country,
-            // adminId
+            adminId
         })
         await newCompanyProfile.save()
         return res.status(201).json({message: "Company data saved successfully", data: newCompanyProfile})
 
     } catch (error) {
         console.error("Failed to submit company form", error)
-        return res.status(500).json({message: "Internal Server Error"})
+        return res.status(500).json({message: "Internal Server Error.."})
     }
 }
+
+export const getCompanyProfile:RequestHandler = async(req ,res)=>{
+    try {
+        const adminId = (req as any).user.id;
+        console.log("USER ID:", (req as any).user);
+        if (!adminId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const company = await Company.findOne({adminId})
+        if(!company){
+            return res.status(200).json({exists: false,data: null})
+        }
+        return res.status(200).json({exists: true, data: company})
+    } catch (error) {
+        console.error("Failed to fetch company profile", error)
+        return res.status(500).json({message: "Internal Server error"})
+    }
+}
+

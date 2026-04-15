@@ -5,6 +5,7 @@ interface SetupStepCardProps {
   title: string
   description: string
   onClick?: () => void
+  isCompleted?: boolean
 }
 
 const SetupStepCard = ({
@@ -12,11 +13,14 @@ const SetupStepCard = ({
   title,
   description,
   onClick,
+  isCompleted
 }: SetupStepCardProps) => {
   return (
     <div
       onClick={onClick}
-      className="w-[364px] h-[430px] p-6 rounded-xl border bg-white shadow-sm hover:border hover:border-l-[#41E6F8] hover:border-t-[#3077F3] hover:border-b-[#B96AF7] hover:border-r-[#FDA052] hover hover:shadow-md hover:bg-linear-to-b hover:from-blue-200 transition cursor-pointer bg-linear-to-b from-blue-100 to-[#FEFEFE] flex flex-col items-center "
+      className={`w-[364px] h-[430px] p-6 rounded-xl border bg-white shadow-sm hover:border bg-linear-to-b from-blue-100 to-[#FEFEFE] flex flex-col items-center transition  
+        ${isCompleted? "cursor-not-allowed border-green-100 shadow-2xl shadow-green-500":
+          "hover:border-l-[#41E6F8] hover:border-t-[#3077F3] hover:border-b-[#B96AF7] hover:border-r-[#FDA052] hover:shadow-md hover:bg-linear-to-b hover:from-blue-200  cursor-pointer "}`}
     >
         {/* icon */}
 {/* icon wrapper */}
