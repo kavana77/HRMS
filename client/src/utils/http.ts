@@ -22,7 +22,7 @@ const authorizedFetch = async (endpoint: string, options: RequestInit = {}) => {
     headers["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(`http://localhost:4000/api${endpoint}`, {
+  const response = await fetch(`https://hrms-6-inr1.onrender.com/api${endpoint}`, {
     ...options,
     headers
   });
