@@ -20,10 +20,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip"
 
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-  { name: "Payroll", icon: Wallet, path: "/payroll" },
   { name: "Leave", icon: CalendarCheck, path: "/leave" },
   { name: "Attendance", icon: Clock, path: "/attendance" },
   { name: "Company Policy", icon: FileText, path: "/company-policy" },
+  { name: "Payroll", icon: Wallet, path: "/payroll" }
 ]
 
 const AdminSidebar = () => {

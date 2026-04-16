@@ -18,10 +18,15 @@ const LoginPage = () => {
     const onSubmit = async (data: AdminLoginType) => {
         try {
             setApiError(null)
-            await login(data)
+            const res= await login(data)
             console.log("Logged in sucessfully", data)
             reset()
-            navigate("/admin/login-confirmation")
+            if(res.user.isFirstLogin){
+                navigate("/admin/login-confirmation")
+            }else{
+                navigate("/admin/workspace-setup")
+            }
+            
         } catch (error:any) {
             console.error("Failed to login", error)
             setApiError(error.message || "Invalid email or password")

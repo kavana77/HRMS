@@ -53,6 +53,10 @@ const userSchema = new mongoose_1.default.Schema({
     isFirstLogin: {
         type: Boolean,
         default: true
+    },
+    completedSteps: {
+        type: [String],
+        defaule: []
     }
 }, {
     timestamps: true

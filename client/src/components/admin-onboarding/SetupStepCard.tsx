@@ -6,6 +6,7 @@ interface SetupStepCardProps {
   description: string
   onClick?: () => void
   isCompleted?: boolean
+  progress?: number | undefined
 }
 
 const SetupStepCard = ({
@@ -13,12 +14,13 @@ const SetupStepCard = ({
   title,
   description,
   onClick,
-  isCompleted
+  isCompleted,
+  progress =0
 }: SetupStepCardProps) => {
   return (
     <div
       onClick={onClick}
-      className={`w-[364px] h-[420px] p-6 rounded-2xl shadow-sm flex flex-col transition
+      className={`relative w-[364px] h-[420px] p-6 rounded-2xl shadow-sm flex flex-col transition
         ${
           isCompleted
             ? "bg-gradient-to-b from-green-100 to-white cursor-not-allowed"
@@ -28,7 +30,7 @@ const SetupStepCard = ({
       {/* ICON SECTION */}
       <div className="flex items-center justify-center w-full pt-10 pb-6 relative">
 
-        {/* 🌟 Soft Glow */}
+        {/* Soft Glow */}
         {isCompleted && (
           <div className="absolute flex items-center justify-center">
             <div
@@ -58,13 +60,27 @@ const SetupStepCard = ({
           </div>
         </div>
       </div>
+{/* Show progress ONLY when > 0 */}
+{progress > 0 && (
+  <div className="absolute w-[88%] top-54 ">
+    <p className="text-xs text-gray-500 mb-1">
+      {progress}% complete
+    </p>
 
+    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div
+        className="h-2 bg-green-500 rounded-full transition-all duration-500 ease-in-out"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  </div>
+)}
       {/* TEXT SECTION */}
-      <div className="space-y-2 mt-20" >
+      <div className="space-y-2 mt-16" >
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold">{title}</h3>
 
-          {/* ✅ Completed Badge */}
+          {/* Completed Badge */}
           {isCompleted && (
             <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700 border border-green-300">
               Completed

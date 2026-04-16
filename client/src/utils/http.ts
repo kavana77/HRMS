@@ -22,7 +22,7 @@ const authorizedFetch = async (endpoint: string, options: RequestInit = {}) => {
     headers["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(`http://localhost:4000/api${endpoint}`, {
+  const response = await fetch(`https://hrms-6-inr1.onrender.com/api${endpoint}`, {
     ...options,
     headers
   });
@@ -66,7 +66,7 @@ export const adminLogin = async (data: AdminLoginType) => {
   });
   // store token
   localStorage.setItem("token", res.token);
-  // store companyName (IMPORTANT)
+  // store companyName 
   localStorage.setItem("companyName", res.user.companyName);
 
   return res;
@@ -202,5 +202,17 @@ export const getPolicies = async()=>{
 export const deletePolicy = (id:string)=>{
     return authorizedFetch(`/policy/delete/${id}`,{
         method: "DELETE"
+    })
+}
+
+export const completeStep = async(step: string)=>{
+    return authorizedFetch("/setup/completed-step",{
+        method: "PUT",
+        body: JSON.stringify({step})
+    })
+}
+export const getProgress = async ()=> {
+    return authorizedFetch("/setup/progress",{
+        method: "GET"
     })
 }

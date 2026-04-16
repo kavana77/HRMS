@@ -1,0 +1,12 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const authMiddleware_1 = __importDefault(require("../middleware/authMiddleware"));
+const setupController_1 = require("../controllers/setupController");
+const router = express_1.default.Router();
+router.put("/completed-step", authMiddleware_1.default, setupController_1.completeStep);
+router.get("/progress", authMiddleware_1.default, setupController_1.getProgress);
+exports.default = router;

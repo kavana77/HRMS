@@ -11,6 +11,7 @@ import HolidayList from "@/components/admin-onboarding/company-setting/HolidayLi
 import { useLeave } from "@/hooks/useLeave"
 import LeaveTable from "@/components/admin-onboarding/company-setting/LeaveTable"
 import {type LeaveResponseType } from "@/lib/zodSchema"
+import { completeStep } from "@/utils/http"
 
 
 const LeavePage = () => {
@@ -58,6 +59,7 @@ const handleEditLeave = (leave: LeaveResponseType) => {
                 })
             } else {
                 await addHoliday(data)
+                await completeStep("holiday")
             }
             reset()
             setSelectedHoliday(null)

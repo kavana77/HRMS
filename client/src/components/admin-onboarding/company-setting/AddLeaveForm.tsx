@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form"
 import { DatePicker } from "@/components/DatePicker"
 import type { LeaveTypeType } from "@/lib/zodSchema"
 import { useLeave } from "@/hooks/useLeave"
+import { completeStep } from "@/utils/http"
 
 
 const AddLeaveForm = () => {
@@ -34,6 +35,7 @@ const AddLeaveForm = () => {
         })
       }else{
         await addLeave(data)
+        await completeStep("leave")
       }
       reset()
       navigate('/leave')

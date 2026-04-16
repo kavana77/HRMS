@@ -5,6 +5,7 @@ import SettingIcon from "../../assets/icons/workspace-setup/setting.png"
 import MailIcon from "../../assets/icons/workspace-setup/mail.png"
 // import GMailIcon from "@/assets/icons/workspace-setup/mailG.png"
 import SetupStepCard from "../../components/admin-onboarding/SetupStepCard"
+import { getProgress } from "@/utils/http"
 import { useNavigate } from "react-router-dom"
 import Logo from "../../assets/magure-logo.png"
 import InviteAdmin from "@/components/admin-onboarding/SelectDialog"
@@ -16,20 +17,29 @@ import { getCompanyProfile } from "@/utils/http"
 
 const WorkspaceSetupPage = () => {
   const navigate = useNavigate()
+  const [progress, setProgress] = useState(0)
+  const [completedSteps, setCompletedSteps] = useState<string[]>([])
   const [companyExists, setCompanyExists] = useState(false)
   const [openInviteAdmin, setOpenInviteAdmin] = useState(false)
 useEffect(() => {
-  const fetchCompany = async () => {
+  const fetchData = async () => {
     try {
-      const res = await getCompanyProfile(); // ✅ get response
-      setCompanyExists(res.exists); // ✅ use actual value
-    } catch (error) {
-      console.error("Error fetching company", error);
-    }
-  };
+      const [companyRes, progressRes] = await Promise.all([
+        getCompanyProfile(),
+        getProgress()
+      ])
 
-  fetchCompany();
-}, []);
+      setCompanyExists(companyRes.exists)
+      setProgress(progressRes.progress || 0)
+      setCompletedSteps(progressRes.completedSteps || [])
+
+    } catch (error) {
+      console.error("Error fetching data", error)
+    }
+  }
+
+  fetchData()
+}, [])
   return (
     <div className="p-14 flex flex-col items-center justify-center bg-gray-50 ">
 
@@ -62,6 +72,8 @@ useEffect(() => {
           title="Company Settings"
           description="Configure attendance rules, leave policies, and payroll preferences."
           onClick={() => navigate("/dashboard")}
+          isCompleted={completedSteps.length > 0}
+          progress={progress}
         />
 
         <SetupStepCard
