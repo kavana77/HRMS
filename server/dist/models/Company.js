@@ -34,7 +34,7 @@ const companySchema = new mongoose_1.default.Schema({
     adminId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
-        // required: true
+        required: true
     }
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("Company", companySchema);

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCompanyProfile = void 0;
+exports.getCompanyProfile = exports.createCompanyProfile = void 0;
 const Company_1 = __importDefault(require("../models/Company"));
 const fileService_1 = require("../service/fileService");
 const createCompanyProfile = async (req, res) => {
@@ -12,13 +12,13 @@ const createCompanyProfile = async (req, res) => {
         if (!companyName || !registeredAddress || !pincode || !state || !country) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        //     const adminId = (req as any).userId;
-        //     const existingCompany = await Company.findOne({adminId})
-        //     if (existingCompany) {
-        //         return res.status(409).json({
-        //         message: "Company profile already exists"
-        //     })
-        // }
+        const adminId = req.user?.id;
+        const existingCompany = await Company_1.default.findOne({ adminId });
+        if (existingCompany) {
+            return res.status(409).json({
+                message: "Company profile already exists"
+            });
+        }
         let companyLogo = "";
         let publicId = "";
         if (req.file) {
@@ -34,14 +34,32 @@ const createCompanyProfile = async (req, res) => {
             pincode,
             state,
             country,
-            // adminId
+            adminId
         });
         await newCompanyProfile.save();
         return res.status(201).json({ message: "Company data saved successfully", data: newCompanyProfile });
     }
     catch (error) {
         console.error("Failed to submit company form", error);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error.." });
     }
 };
 exports.createCompanyProfile = createCompanyProfile;
+const getCompanyProfile = async (req, res) => {
+    try {
+        const adminId = req.user.id;
+        if (!adminId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const company = await Company_1.default.findOne({ adminId });
+        if (!company) {
+            return res.status(200).json({ exists: false, data: null });
+        }
+        return res.status(200).json({ exists: true, data: company });
+    }
+    catch (error) {
+        console.error("Failed to fetch company profile", error);
+        return res.status(500).json({ message: "Internal Server error" });
+    }
+};
+exports.getCompanyProfile = getCompanyProfile;

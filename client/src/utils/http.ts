@@ -22,7 +22,7 @@ const authorizedFetch = async (endpoint: string, options: RequestInit = {}) => {
     headers["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(`https://hrms-6-inr1.onrender.com/api${endpoint}`, {
+  const response = await fetch(`http://localhost:4000/api${endpoint}`, {
     ...options,
     headers
   });
@@ -72,15 +72,10 @@ export const adminLogin = async (data: AdminLoginType) => {
   return res;
 };
 export const firstLoginComplete = async () => {
-  const res = await authorizedFetch("/auth/complete-first-login", {
+   const res =authorizedFetch("/auth/complete-first-login", {
     method: "PUT"
   })
-
-  if (!res.ok) {
-    throw new Error("Failed to update first login")
-  }
-
-  return res.json()
+  return res
 }
 export const companySetup = async (
     data: {

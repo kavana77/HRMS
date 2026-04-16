@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminLogin = exports.adminSignup = void 0;
+exports.completeFirstLogin = exports.adminLogin = exports.adminSignup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 // import crypto from "crypto"
@@ -83,7 +83,8 @@ const adminLogin = async (req, res) => {
             user: {
                 fullName: user.fullName,
                 email: user.email,
-                companyName: user.companyName
+                companyName: user.companyName,
+                isFirstLogin: user.isFirstLogin
             }
         });
     }
@@ -93,3 +94,21 @@ const adminLogin = async (req, res) => {
     }
 };
 exports.adminLogin = adminLogin;
+const completeFirstLogin = async (req, res) => {
+    try {
+        const adminId = req.user?.id;
+        if (!adminId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const updatedUser = await User_1.default.findByIdAndUpdate(adminId, { isFirstLogin: false }, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ message: "Updated" });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server error" });
+    }
+};
+exports.completeFirstLogin = completeFirstLogin;

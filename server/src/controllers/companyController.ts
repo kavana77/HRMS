@@ -9,7 +9,6 @@ export const createCompanyProfile:RequestHandler = async(req ,res)=>{
             return res.status(400).json({message: "All fields are required"})
         }
         const adminId = (req as any).user?.id;
-        console.log("adminId:", (req as any).user);
         const existingCompany = await Company.findOne({adminId})
         if (existingCompany) {
             return res.status(409).json({
@@ -45,7 +44,6 @@ export const createCompanyProfile:RequestHandler = async(req ,res)=>{
 export const getCompanyProfile:RequestHandler = async(req ,res)=>{
     try {
         const adminId = (req as any).user.id;
-        console.log("USER ID:", (req as any).user);
         if (!adminId) {
             return res.status(401).json({ message: "Unauthorized" });
         }
