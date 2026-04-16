@@ -95,14 +95,28 @@ export const adminLogin: RequestHandler = async (req, res) => {
     }
 }
 
-export const completeFirstLogin:RequestHandler = async(req ,res)=>{
-    try {
-        const adminId = (req as any).user?.id
-        await User.findByIdAndUpdate(adminId,{
-            isFirstLogin: false
-        })
-        return res.status(200).json({message: "Updated"})
-    } catch (error) {
-        return res.status(500).json({message: "Internal Server error"})
+export const completeFirstLogin: RequestHandler = async (req, res) => {
+  try {
+    const adminId = (req as any).user?.id
+
+    if (!adminId) {
+      return res.status(401).json({ message: "Unauthorized" })
     }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      adminId,
+      { isFirstLogin: false },
+      { new: true }
+    )
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" })
+    }
+console.log("completeFirstLogin HIT")
+    return res.status(200).json({ message: "Updated" })
+
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: "Internal Server error" })
+  }
 }
