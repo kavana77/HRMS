@@ -1,6 +1,9 @@
-import FileIcon from "../../assets/icons/file.png"
-import SettingIcon from "../../assets/icons/setting.png"
-import MailIcon from "../../assets/icons/mail.png"
+import FileIcon from "../../assets/icons/workspace-setup/file.png"
+import GFileIcon from "@/assets/icons/workspace-setup/fileG.png"
+import SettingIcon from "../../assets/icons/workspace-setup/setting.png"
+import GSettingIcon from "@/assets/icons/workspace-setup/settingG.png"
+import MailIcon from "../../assets/icons/workspace-setup/mail.png"
+import GMailIcon from "@/assets/icons/workspace-setup/mailG.png"
 import SetupStepCard from "../../components/admin-onboarding/SetupStepCard"
 import { useNavigate } from "react-router-dom"
 import Logo from "../../assets/magure-logo.png"
@@ -18,8 +21,8 @@ const WorkspaceSetupPage = () => {
 useEffect(() => {
   const fetchCompany = async () => {
     try {
-      const res = await getCompanyProfile();
-      setCompanyExists(res.data.exists);
+      const res = await getCompanyProfile(); // ✅ get response
+      setCompanyExists(res.exists); // ✅ use actual value
     } catch (error) {
       console.error("Error fetching company", error);
     }
@@ -47,10 +50,10 @@ useEffect(() => {
       <div className="flex gap-6 flex-wrap justify-center">
 
         <SetupStepCard
-          icon={<img src={FileIcon} className="w-8 h-8"/>}
+          icon={<img src={companyExists?GFileIcon:FileIcon} className="w-8 h-8"/>}
           title="Company Profile"
           description="Add your company details like name, logo, and registered address."
-          onClick={() => navigate("/admin/setup-company")}
+          onClick={!companyExists ? () => navigate("/admin/setup-company") : undefined}
           isCompleted={companyExists}
         />
 
