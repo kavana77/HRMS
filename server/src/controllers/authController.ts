@@ -101,7 +101,8 @@ export const completeFirstLogin:RequestHandler = async(req ,res)=>{
         await User.findByIdAndUpdate(adminId,{
             isFirstLogin: false
         })
+        return res.status(200).json({message: "Updated"})
     } catch (error) {
-        res.status(500).json({message: "Internal Server error"})
+        return res.status(500).json({message: "Internal Server error"})
     }
 }

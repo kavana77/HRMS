@@ -71,10 +71,16 @@ export const adminLogin = async (data: AdminLoginType) => {
 
   return res;
 };
-export const firstLoginComplete = ()=>{
-    return authorizedFetch("/auth/admin/complete-first-login",{
-        method: "PUT"
-    })
+export const firstLoginComplete = async () => {
+  const res = await authorizedFetch("/auth/complete-first-login", {
+    method: "PUT"
+  })
+
+  if (!res.ok) {
+    throw new Error("Failed to update first login")
+  }
+
+  return res.json()
 }
 export const companySetup = async (
     data: {

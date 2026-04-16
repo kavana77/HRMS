@@ -4,6 +4,7 @@ import { firstLoginComplete } from "@/utils/http"
 import {  useNavigate } from "react-router-dom"
 
 const LoginConfirmationPage = () => {
+     const companyName = localStorage.getItem("companyName") || ""
     const navigate = useNavigate()
     const handleStartSetup = async() => {
         await firstLoginComplete()
@@ -21,7 +22,7 @@ const LoginConfirmationPage = () => {
             {/* FORM CARD */}
             <GradientContainer>
                 <LoginConfirmationCard
-                    companyName="Magure Texh India Pvt. Ltd."
+                    companyName={companyName}
                     onStartSetup={handleStartSetup} />
 
             </GradientContainer>
