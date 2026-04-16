@@ -71,6 +71,11 @@ export const adminLogin = async (data: AdminLoginType) => {
 
   return res;
 };
+export const firstLoginComplete = ()=>{
+    return authorizedFetch("/auth/admin/complete-first-login",{
+        method: "PUT"
+    })
+}
 export const companySetup = async (
     data: {
         companyName: string,

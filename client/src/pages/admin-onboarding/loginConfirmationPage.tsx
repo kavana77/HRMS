@@ -1,9 +1,13 @@
 import LoginConfirmationCard from "@/components/admin-onboarding/auth/LoginConfirmationCard"
 import GradientContainer from "@/components/admin-onboarding/GradientContainer"
+import { firstLoginComplete } from "@/utils/http"
+import {  useNavigate } from "react-router-dom"
 
 const LoginConfirmationPage = () => {
-    const handleStartSetup = () => {
-
+    const navigate = useNavigate()
+    const handleStartSetup = async() => {
+        await firstLoginComplete()
+        navigate("/admin/workspace-setup")
     }
     return (
         <div className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden ">

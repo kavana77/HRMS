@@ -10,5 +10,6 @@ export interface User extends Document {
     isVerified?: boolean,
     verificationToken?: string,
     verificationTokenExpiry?: Date,
+    isFirstLogin: boolean
     
 }

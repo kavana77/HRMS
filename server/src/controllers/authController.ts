@@ -85,11 +85,23 @@ export const adminLogin: RequestHandler = async (req, res) => {
             user: {
                 fullName: user.fullName,
                 email: user.email,
-                companyName: user.companyName
+                companyName: user.companyName,
+                isFirstLogin: user.isFirstLogin
             }
          })
     } catch (error) {
         console.error("Error in login", error)
         return res.status(500).json({ meesage: "Internal Server error" })
+    }
+}
+
+export const completeFirstLogin:RequestHandler = async(req ,res)=>{
+    try {
+        const adminId = (req as any).user?.id
+        await User.findByIdAndUpdate(adminId,{
+            isFirstLogin: false
+        })
+    } catch (error) {
+        res.status(500).json({message: "Internal Server error"})
     }
 }

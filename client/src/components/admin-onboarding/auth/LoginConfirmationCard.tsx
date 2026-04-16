@@ -42,7 +42,7 @@ const LoginConfirmationCard = ({
 
       {/* Button */}
       <Button
-        className="w-full"
+        className="w-full cursor-pointer"
         onClick={onStartSetup}
       >
         Start setup

@@ -21,7 +21,7 @@ const LoginPage = () => {
             await login(data)
             console.log("Logged in sucessfully", data)
             reset()
-            navigate("/admin/workspace-setup")
+            navigate("/admin/login-confirmation")
         } catch (error:any) {
             console.error("Failed to login", error)
             setApiError(error.message || "Invalid email or password")
