@@ -72,7 +72,7 @@ useEffect(() => {
           title="Company Settings"
           description="Configure attendance rules, leave policies, and payroll preferences."
           onClick={() => navigate("/dashboard")}
-          isCompleted={completedSteps.length > 0}
+          isCompleted={completedSteps.length === 100}
           progress={progress}
         />
 
