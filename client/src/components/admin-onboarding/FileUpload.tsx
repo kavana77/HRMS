@@ -4,7 +4,8 @@ import { Label } from "@/components/ui/label"
 
 type UploadStatus = "idle" | "uploading" | "success" | "error"
 type FileUpload = {
-  uploadTypes: "image" | "document"
+  title: string,
+  uploadTypes: "image" | "file"
   onFileChange?: (file: File) =>  void
 }
 const uploadConfig = {
@@ -13,7 +14,7 @@ const uploadConfig = {
     accept: "image/*",
     label: "SVG, PNG, JPG or GIF (max. 2mb)"
   },
-  document: {
+  file: {
     maxSize: 20 * 1024 * 1024,
     accept: ".pdf, .doc, .docx, .xls, .xlsx, .txt",
     label : "pfd, doc, xlsx, txt etc (max 20MB)"
@@ -21,7 +22,7 @@ const uploadConfig = {
 }
 
 
-const FileUploads = ({uploadTypes,onFileChange}:FileUpload) => {
+const FileUploads = ({uploadTypes,onFileChange,title}:FileUpload) => {
   const config = uploadConfig[uploadTypes]
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
@@ -73,7 +74,7 @@ const FileUploads = ({uploadTypes,onFileChange}:FileUpload) => {
   return (
     <div className="space-y-2">
       <Label className="text-gray-500">
-        Company logo <span className="text-red-600">*</span>
+        {title} <span className="text-red-600">*</span>
       </Label>
 
       {/* DEFAULT STATE */}

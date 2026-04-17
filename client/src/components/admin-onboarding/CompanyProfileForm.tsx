@@ -67,6 +67,7 @@ const CompanyProfileForm = () => {
 
       {/* Upload */}
       <FileUploads
+      title="Company Logo"
       uploadTypes="image" 
       onFileChange={setFile}/>
 

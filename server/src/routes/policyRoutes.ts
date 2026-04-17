@@ -8,5 +8,5 @@ const router = express.Router()
 router.post("/create",upload.single("file"),validateFileSize, createPolicy)
 router.get("/get", getPolicies)
 router.delete("/delete/:id",deletePolicy)
-router.put('/update/:id', updatePolicy)
+router.put('/update/:id',upload.single("file"), updatePolicy)
 export default router
