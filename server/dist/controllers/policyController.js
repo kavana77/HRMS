@@ -11,9 +11,6 @@ const fileService_1 = require("../service/fileService");
 const createPolicy = async (req, res) => {
     try {
         const { policyName, category, effectiveFrom } = req.body;
-        if (!policyName || !category || !effectiveFrom) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
         let documentUrl = "";
         let publicId = "";
         if (req.file) {
@@ -21,18 +18,18 @@ const createPolicy = async (req, res) => {
             documentUrl = uploadResult.url;
             publicId = uploadResult.public_id;
         }
-        else {
-            return res.status(400).json({ message: "Document is required" });
-        }
+        const isComplete = policyName && category && effectiveFrom && documentUrl;
+        const status = isComplete ? "Active" : "Draft";
         const policy = await Policy_1.default.create({
             policyName,
             category,
             effectiveFrom,
             documentUrl,
-            publicId
+            publicId,
+            status
         });
         return res.status(201).json({
-            message: "Policy created successfully",
+            message: "1 Policy added to the organization successfully",
             data: policy,
         });
     }
@@ -99,18 +96,20 @@ const updatePolicy = async (req, res) => {
         }
         let documentUrl = existingPolicy.documentUrl;
         let publicId = existingPolicy.publicId;
-        // If new file uploaded
         if (req.file) {
             const uploadResult = await (0, fileService_1.cloudinaryUpload)(req.file);
             documentUrl = uploadResult.url;
             publicId = uploadResult.public_id;
         }
+        const isComplete = policyName && category && effectiveFrom && documentUrl;
+        const status = isComplete ? "Active" : "Draft";
         const updatedPolicy = await Policy_1.default.findByIdAndUpdate(id, {
             policyName,
             category,
             effectiveFrom,
             documentUrl,
             publicId,
+            status
         }, { new: true });
         return res.status(200).json({
             message: "Policy updated successfully",
@@ -138,7 +137,7 @@ const deletePolicy = async (req, res) => {
             return res.status(404).json({ message: "Policy not found" });
         }
         return res.status(200).json({
-            message: "Policy deleted successfully",
+            message: `${deletedPolicy.policyName} Policy deleted successfully`,
         });
     }
     catch (error) {

@@ -11,4 +11,5 @@ const router = express_1.default.Router();
 router.post("/create", fileUpload_1.default.single("file"), validateFileSize_1.validateFileSize, policyController_1.createPolicy);
 router.get("/get", policyController_1.getPolicies);
 router.delete("/delete/:id", policyController_1.deletePolicy);
+router.put('/update/:id', policyController_1.updatePolicy);
 exports.default = router;
