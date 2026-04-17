@@ -1,13 +1,16 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { PolicyResponseType } from "@/lib/zodSchema"
+import DeleteConfirmation from "@/components/admin-onboarding/SelectDialog"
 import { Pencil, Trash2 } from "lucide-react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
 type PolicyProps = {
     policies: PolicyResponseType[]
     onEdit: (policy: PolicyResponseType) => void
     onDelete: (id: string) => void
 }
 const PolicyList = ({ policies = [], onDelete, onEdit }: PolicyProps) => {
-   
+    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false)
     return (
         <div className="rounded-xl border overflow-hidden">
             <Table>
@@ -23,7 +26,7 @@ const PolicyList = ({ policies = [], onDelete, onEdit }: PolicyProps) => {
                 <TableBody>
                     {policies.map((policy) => {
                         const date = new Date(policy.effectiveFrom)
-                         const isEditable = policy.status === "Draft";
+                        const isEditable = policy.status === "Draft";
                         return (
                             <TableRow key={policy._id}>
                                 <TableCell className="px-6 py-4">
@@ -49,22 +52,49 @@ const PolicyList = ({ policies = [], onDelete, onEdit }: PolicyProps) => {
                                     <div className="flex justify-end gap-8">
                                         <Pencil
                                             className={`w-3 h-3 ${isEditable
-                                                    ? "text-blue-500 cursor-pointer"
-                                                    : "text-gray-300 cursor-not-allowed"
+                                                ? "text-blue-500 cursor-pointer"
+                                                : "text-gray-300 cursor-not-allowed"
                                                 }`}
                                             onClick={() => {
                                                 if (!isEditable) return;
                                                 onEdit(policy);
                                             }}
                                         />
-                                        <Trash2 className="w-3 h-3 text-red-500 cursor-pointer" onClick={() => onDelete(policy._id)} />
+                                        <Trash2 className="w-3 h-3 text-red-500 cursor-pointer" onClick={() => setOpenDeleteConfirmation(true)} />
                                     </div>
+                                    <DeleteConfirmation
+                                    
+                                        isOpen={openDeleteConfirmation}
+                                        onOpenChange={setOpenDeleteConfirmation}
+                                        title="Are you sure you want to delete this policy?">
+                                        <p className="text-gray-500 py-4 px-2.5 text-center">Deleting this policy will remove it from employee access and compliance records. This action cannot be undone.</p>
+                                        <div className="flex items-center justify-center gap-4 mt-3">
+                                        <Button
+                                            variant="outline"
+                                            className="cursor-pointer px-12 border-blue-600 text-blue-600"
+                                            onClick={() => setOpenDeleteConfirmation(false)}
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            className="cursor-pointer px-10 border-red-500 text-red-500"
+
+                                            onClick={() => {onDelete(policy._id); setOpenDeleteConfirmation(false)}}
+                                        >
+                                            Yes, Delete
+                                        </Button>
+                                        </div>
+                                    </DeleteConfirmation>
                                 </TableCell>
                             </TableRow>
+
                         )
+
                     })}
                 </TableBody>
             </Table>
+
         </div>
     )
 }
