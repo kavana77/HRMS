@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IAttendanceSettings } from "../types/attendanceSettings.types";
 
 const attendanceSettingsSchema = new mongoose.Schema<IAttendanceSettings>(
     {
-        // companyId:{
-        //     type: Schema.Types.ObjectId,
-        //     ref: "Company",
-        //     required: true,
-        //     unique: true
-        // }
+        companyId:{
+            type: Schema.Types.ObjectId,
+            ref: "Company",
+            required: true,
+            unique: true
+        },
         trackingMethod:{
             type: String,
             enum: ["Web","Mobile","Both"],

@@ -13,24 +13,43 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 const departments = ["HR", "Security", "Compliance", "IT", "Finance"]
-
+type PolicyWithId = PolicyType & {
+  _id: string;
+  status: "Active" | "Draft";
+};
 const CompanyPolicyPage = () => {
+    const [editingPolicy, setEditingPolicy] = useState<PolicyWithId | null>(null)
     const [file, setFile] = useState<File | null>(null)
     const [isOpen, setIsOpen] = useState(false)
     const {handleSubmit, register, setValue,reset} = useForm<PolicyType>()
-    const {createPolicy, Policy,deletePolicy}=usePolicy()
-    
-    const onSubmit = async(formData: PolicyType) =>{
-        try {
-            await createPolicy({data: formData, file: file || undefined})
-            reset()
-            setFile(null)
-            setIsOpen(false)
-        } catch (error) {
-            console.error("Failed to Submit Policy")
-            throw error
-        }
-    }
+    const {createPolicy, policies,updatePolicy,isError,isLoading,deletePolicy}=usePolicy()
+    const handleEdit = (policy: PolicyWithId) => {
+  setEditingPolicy(policy);
+
+  setValue("policyName", policy.policyName);
+  setValue("category", policy.category);
+  setValue("effectiveFrom", policy.effectiveFrom);
+
+  setIsOpen(true);
+};
+const onSubmit = async (formData: PolicyType) => {
+  if (editingPolicy) {
+    await updatePolicy({
+      id: editingPolicy._id,
+      data: formData,
+      file: file || undefined,
+    });
+  } else {
+    await createPolicy({ data: formData, file: file || undefined });
+  }
+
+  reset();
+  setFile(null);
+  setIsOpen(false);
+  setEditingPolicy(null);
+};
+    if (isLoading) return <p>Loading policies...</p>;
+if (isError) return <p>Something went wrong</p>;
     return (
         <div>
             <Link to="/admin/workspace-setup" className="text-[10px] text-gray-600 flex items-center gap-1"><ArrowLeft size={12}/>Workspace</Link>
@@ -43,8 +62,9 @@ const CompanyPolicyPage = () => {
                     <Button onClick={() => setIsOpen(true)} className="cursor-pointer">+ Add Policy</Button>
                 </div>
                 {/* Empty State */}
-                {Array.isArray(Policy) && Policy.length === 0 ?<EmptyState />:<PolicyList
-                policies={Policy}
+                {Array.isArray(policies) && policies.length === 0 ?<EmptyState />:<PolicyList
+                policies={policies}
+                onEdit={handleEdit}
                 onDelete={deletePolicy}/>}
             </div>
             <SelectDialog

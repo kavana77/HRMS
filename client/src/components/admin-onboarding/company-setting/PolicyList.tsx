@@ -3,10 +3,11 @@ import type { PolicyResponseType } from "@/lib/zodSchema"
 import { Pencil, Trash2 } from "lucide-react"
 type PolicyProps = {
     policies: PolicyResponseType[]
-    // onEdit: (policy: PolicyResponseType)=> void
-    onDelete: (id:string)=> void
+    onEdit: (policy: PolicyResponseType) => void
+    onDelete: (id: string) => void
 }
-const PolicyList = ({ policies = [],onDelete }: PolicyProps) => {
+const PolicyList = ({ policies = [], onDelete, onEdit }: PolicyProps) => {
+   
     return (
         <div className="rounded-xl border overflow-hidden">
             <Table>
@@ -22,6 +23,7 @@ const PolicyList = ({ policies = [],onDelete }: PolicyProps) => {
                 <TableBody>
                     {policies.map((policy) => {
                         const date = new Date(policy.effectiveFrom)
+                         const isEditable = policy.status === "Draft";
                         return (
                             <TableRow key={policy._id}>
                                 <TableCell className="px-6 py-4">
@@ -45,8 +47,17 @@ const PolicyList = ({ policies = [],onDelete }: PolicyProps) => {
                                 </TableCell>
                                 <TableCell className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-8">
-                                        <Pencil className="w-3 h-3 text-blue-500 cursor-pointer"  />
-                                        <Trash2 className="w-3 h-3 text-red-500 cursor-pointer" onClick={()=> onDelete(policy._id)}/>
+                                        <Pencil
+                                            className={`w-3 h-3 ${isEditable
+                                                    ? "text-blue-500 cursor-pointer"
+                                                    : "text-gray-300 cursor-not-allowed"
+                                                }`}
+                                            onClick={() => {
+                                                if (!isEditable) return;
+                                                onEdit(policy);
+                                            }}
+                                        />
+                                        <Trash2 className="w-3 h-3 text-red-500 cursor-pointer" onClick={() => onDelete(policy._id)} />
                                     </div>
                                 </TableCell>
                             </TableRow>

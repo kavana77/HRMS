@@ -60,6 +60,7 @@ useEffect(() => {
       <div className="flex gap-6 flex-wrap justify-center">
 
         <SetupStepCard
+          className="w-[200px] h-[420px]"
           icon={<img src={companyExists?GFileIcon:FileIcon} className="w-8 h-8"/>}
           title="Company Profile"
           description="Add your company details like name, logo, and registered address."
@@ -68,6 +69,7 @@ useEffect(() => {
         />
 
         <SetupStepCard
+          className="w-[200px] h-[420px]"
           icon={<img src={SettingIcon} className="w-8 h-8"/>}
           title="Company Settings"
           description="Configure attendance rules, leave policies, and payroll preferences."
@@ -77,6 +79,7 @@ useEffect(() => {
         />
 
         <SetupStepCard
+          className="w-[300px] h-[420px]"
           icon={<img src={MailIcon} className="w-8 h-8"/>}
           title="Invite Admin"
           description="Invite your HR team members to help manage operations."

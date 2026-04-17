@@ -5,22 +5,18 @@ const policySchema = new mongoose.Schema<IPolicy>(
     {
         policyName:{
             type: String,
-            required: true,
             trim: true
         },
         category: {
             type: String,
-            required: true,
             enum: ["HR", "Security", "Compliance", "IT", "Finance"],
             default: "HR"
         },
         effectiveFrom: {
-            type: Date,
-            required: true
+            type: Date
         },
         documentUrl: {
             type: String,
-            required: true
         },
         publicId: {
             type: String
@@ -28,7 +24,7 @@ const policySchema = new mongoose.Schema<IPolicy>(
         status: {
             type: String,
             enum: ["Active", "Draft"],
-            default: "Active"
+            default: "Draft"
         }
     },{timestamps: true}
 )

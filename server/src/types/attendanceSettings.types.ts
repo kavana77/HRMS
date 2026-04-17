@@ -1,7 +1,7 @@
-import  { Document } from "mongoose";
+import  mongoose, { Document } from "mongoose";
 
 export interface IAttendanceSettings extends Document {
-    // companyId: mongoose.Types.ObjectId,
+    companyId: mongoose.Types.ObjectId,
     trackingMethod: "Web" | "Mobile" | "Both";
     weeklyOff: string[];
     lateMarkAfter:number;

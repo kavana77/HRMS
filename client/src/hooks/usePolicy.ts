@@ -1,5 +1,5 @@
 import type { PolicyType } from "@/lib/zodSchema"
-import { deletePolicy, getPolicies, uploadPolicy } from "@/utils/http"
+import { deletePolicy, getPolicies, updatePolicy, uploadPolicy } from "@/utils/http"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 type PolicyInput = {
     data: PolicyType
@@ -19,15 +19,24 @@ export const usePolicy = () =>{
             queryClient.invalidateQueries({queryKey:["policy"]})
         }
     })
-    const {data: Policy} = useQuery({
-        queryKey: ["Policy"],
+    const updateMutation = useMutation({
+        mutationFn: ({id, data, file}:any)=>updatePolicy(id, data, file),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['policy']})
+        }
+    })
+    const {data: policies,isLoading,isError} = useQuery({
+        queryKey: ["policy"],
         queryFn: getPolicies,
         select: (res)=> res.data
     })
     return{
         createPolicy : policyMutation.mutateAsync,
-        Policy,
-        deletePolicy : deletePolicyMutation.mutateAsync
+        policies,
+        isLoading,
+        isError,
+        deletePolicy : deletePolicyMutation.mutateAsync,
+        updatePolicy: updateMutation.mutateAsync
 
     }
 }

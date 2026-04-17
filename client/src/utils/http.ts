@@ -183,7 +183,6 @@ export const uploadPolicy = async(data: {
     formData.append("policyName", data.policyName);
     formData.append("category", data.category);
     formData.append("effectiveFrom", data.effectiveFrom);
-    formData.append("status", data.status)
 
     if(file){
         formData.append("file", file)
@@ -192,6 +191,27 @@ export const uploadPolicy = async(data: {
         method: "POST",
         body: formData,
 
+    })
+}
+export const updatePolicy = async (
+    id: string,
+    data: {
+        policyName: string;
+        category: string;
+        effectiveFrom: string
+    },
+    file?: File
+)=>{
+    const formData = new FormData()
+    formData.append("policyName", data.policyName)
+    formData.append("category", data.category)
+    formData.append("effectiveFrom", data.effectiveFrom)
+    if(file){
+        formData.append("file", file)
+    }
+    return authorizedFetch(`/policy/update/${id}`,{
+        method: "PUT",
+        body: formData
     })
 }
 export const getPolicies = async()=>{

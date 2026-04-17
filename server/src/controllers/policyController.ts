@@ -7,11 +7,6 @@ import { cloudinaryUpload } from "../service/fileService";
 export const createPolicy: RequestHandler = async (req, res) => {
   try {
     const { policyName, category, effectiveFrom } = req.body;
-
-    if (!policyName || !category || !effectiveFrom) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
     let documentUrl = "";
     let publicId = "";
 
@@ -19,20 +14,22 @@ export const createPolicy: RequestHandler = async (req, res) => {
       const uploadResult = await cloudinaryUpload(req.file);
       documentUrl = uploadResult.url;
       publicId = uploadResult.public_id;
-    } else {
-      return res.status(400).json({ message: "Document is required" });
-    }
+    } 
+
+    const isComplete = policyName && category && effectiveFrom && documentUrl
+    const status = isComplete ? "Active" : "Draft"  
 
     const policy = await Policy.create({
       policyName,
       category,
       effectiveFrom,
       documentUrl,
-      publicId
+      publicId,
+      status
     });
 
     return res.status(201).json({
-      message: "Policy created successfully",
+      message: "1 Policy added to the organization successfully",
       data: policy,
     });
   } catch (error) {
@@ -104,22 +101,23 @@ export const updatePolicy: RequestHandler = async (req, res) => {
     let documentUrl = existingPolicy.documentUrl;
     let publicId = existingPolicy.publicId;
 
-    // If new file uploaded
+    
     if (req.file) {
       const uploadResult = await cloudinaryUpload(req.file);
       documentUrl = uploadResult.url;
       publicId = uploadResult.public_id;
     }
-
+    const isComplete = policyName && category && effectiveFrom && documentUrl
+    const status = isComplete ? "Active" : "Draft"
     const updatedPolicy = await Policy.findByIdAndUpdate(
       id,
       {
         policyName,
         category,
         effectiveFrom,
-        
         documentUrl,
         publicId,
+        status
       },
       { new: true }
     );
@@ -152,7 +150,7 @@ export const deletePolicy: RequestHandler = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "Policy deleted successfully",
+      message: `${deletedPolicy.policyName} Policy deleted successfully`,
     });
   } catch (error) {
     console.error("Failed to delete policy", error);
