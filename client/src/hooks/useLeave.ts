@@ -2,7 +2,7 @@ import type { LeaveTypeType } from "@/lib/zodSchema"
 import { addLeave, deleteLeave, editLeave, getLeaveById, getLeaves, updateLeaveStatus } from "@/utils/http"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-export const useLeave = () =>{
+export const useLeave = () => {
     const queryClient = useQueryClient()
     const leaveMutations = useMutation({
         mutationFn: (data: LeaveTypeType) => addLeave(data),
@@ -10,29 +10,29 @@ export const useLeave = () =>{
             queryClient.invalidateQueries({ queryKey: ["leaves"] })
         }
     })
-    const {data: leaves=[]} = useQuery({
+    const { data: leaves = [] } = useQuery({
         queryKey: ["leaves"],
         queryFn: getLeaves,
-        select: (res)=> res.data
+        select: (res) => res.data
     })
-    const {data: leaveById} = useQuery({
+    const { data: leaveById } = useQuery({
         queryKey: ["leaveById"],
-        queryFn: ({queryKey}) => getLeaveById(queryKey[1] as string),
+        queryFn: ({ queryKey }) => getLeaveById(queryKey[1] as string),
     })
     const deleteLeaveMutation = useMutation({
         mutationFn: (id: string) => deleteLeave(id),
-        onSuccess: ()=>{
-            queryClient.invalidateQueries({queryKey: ["leaves"]})
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["leaves"] })
         }
     })
     const updateLeaveMutation = useMutation({
-        mutationFn: ({id, data}: {id: string, data: LeaveTypeType}) => editLeave(id, data),
-            onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["leaves"] })
-  }
+        mutationFn: ({ id, data }: { id: string, data: LeaveTypeType }) => editLeave(id, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["leaves"] })
+        }
     })
     const updateLeaveStatusMutation = useMutation({
-        mutationFn: ({id, status}: {id: string, status: string}) => updateLeaveStatus(id, status),
+        mutationFn: ({ id, status }: { id: string, status: string }) => updateLeaveStatus(id, status),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["leaves"] })
         }

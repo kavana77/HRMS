@@ -6,6 +6,8 @@ import holidayRoutes from "./routes/holidayRoutes"
 import leaveRoutes from "./routes/leaveRoutes"
 import policyRoutes from "./routes/policyRoutes"
 import setupRoutes from "./routes/setupRoutes"
+import shiftRoutes from "./routes/shiftRoutes"
+import attendanceRoutes from "./routes/attendanceSettingsRoutes"
 import cors from "cors"
 
 const app = express()
@@ -19,6 +21,8 @@ app.use("/api/holiday", holidayRoutes)
 app.use("/api/leave", leaveRoutes)
 app.use("/api/policy", policyRoutes)
 app.use("/api/setup", setupRoutes)
+app.use("/api/attendance",attendanceRoutes)
+app.use("/api/shift", shiftRoutes)
 
 
 export default app

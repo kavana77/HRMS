@@ -85,11 +85,11 @@ const ShiftRow = () => {
                   />
                   <Clock className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
-                  {/* Delete Icon */}
-            <Trash2
-              className=" p-1  text-red-400 absolute top-6  bg-red-100 right-3 cursor-pointer"
-              onClick={() => remove(index)} size={24}
-            />
+                {/* Delete Icon */}
+                <Trash2
+                  className=" p-1  text-red-400 absolute top-6  bg-red-100 right-3 cursor-pointer"
+                  onClick={() => remove(index)} size={24}
+                />
               </div>
             </div>
 
@@ -101,7 +101,7 @@ const ShiftRow = () => {
               </span>
             </div>
 
-          
+
           </div>
         ))}
 

@@ -1,5 +1,6 @@
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 
 const AttendanceSettingForm = () => {
@@ -12,7 +13,10 @@ const AttendanceSettingForm = () => {
                         <Label className="text-[12px] mb-1">Attendance Tracking Method <span className="text-red-400">*</span></Label>
                         <Select>
                             <SelectTrigger className="w-70 py-4">
-                                <SelectValue placeholder="Select an option"/>
+                                <SelectValue placeholder="Select an option" />
+                                <SelectContent>
+
+                                </SelectContent>
                             </SelectTrigger>
                         </Select>
                     </div>
@@ -20,42 +24,38 @@ const AttendanceSettingForm = () => {
                         <Label className="text-[12px] mb-1">Weekly Off <span className="text-red-400">*</span></Label>
                         <Select>
                             <SelectTrigger className="w-70 py-4">
-                                <SelectValue placeholder="Select an option"/>
+                                <SelectValue placeholder="Select an option" />
                             </SelectTrigger>
                         </Select>
                     </div>
                     <div>
                         <Label className="text-[12px] mb-1">Late Mark After (Minutes) <span className="text-red-400">*</span></Label>
-                        <Select>
-                            <SelectTrigger className="w-70 py-4">
-                                <SelectValue placeholder="e.g. 15"/>
-                            </SelectTrigger>
-                        </Select>
+                        <Input placeholder="eg.15" />
                     </div>
                 </div>
             </form>
-             <div className="space-y-4">
+            <div className="space-y-4">
 
-          <div className="flex items-center justify-between bg-gray-100 border border-[#EAEAEC] px-4 py-3 rounded-xl">
-            <div className="flex items-center gap-4">
-              <Switch className="data-unchecked:bg-[#BFD5FB]" />
-              <p className="text-sm text-gray-600">
-                Allow attendance regularization requests
-              </p>
+                <div className="flex items-center justify-between bg-gray-100 border border-[#EAEAEC] px-4 py-3 rounded-xl">
+                    <div className="flex items-center gap-4">
+                        <Switch className="data-unchecked:bg-[#BFD5FB]" />
+                        <p className="text-sm text-gray-600">
+                            Allow attendance regularization requests
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between bg-gray-100 border border-[#EAEAEC] px-4 py-3 rounded-xl">
+                    <div className="flex items-center gap-4">
+                        <Switch className="data-unchecked:bg-[#BFD5FB]" />
+                        <p className="text-sm text-gray-600">
+                            Require approval for late attendance
+                        </p>
+                    </div>
+                </div>
+
             </div>
-          </div>
 
-          <div className="flex items-center justify-between bg-gray-100 border border-[#EAEAEC] px-4 py-3 rounded-xl">
-            <div className="flex items-center gap-4">
-              <Switch className="data-unchecked:bg-[#BFD5FB]" />
-              <p className="text-sm text-gray-600">
-                Require approval for late attendance
-              </p>
-            </div>
-          </div>
-
-        </div>
-            
         </div>
     )
 }

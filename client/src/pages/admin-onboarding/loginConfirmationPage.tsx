@@ -1,12 +1,12 @@
 import LoginConfirmationCard from "@/components/admin-onboarding/auth/LoginConfirmationCard"
 import GradientContainer from "@/components/admin-onboarding/GradientContainer"
 import { firstLoginComplete } from "@/utils/http"
-import {  useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const LoginConfirmationPage = () => {
-     const companyName = localStorage.getItem("companyName") || ""
+    const companyName = localStorage.getItem("companyName") || ""
     const navigate = useNavigate()
-    const handleStartSetup = async() => {
+    const handleStartSetup = async () => {
         await firstLoginComplete()
         navigate("/admin/workspace-setup")
     }
@@ -24,7 +24,6 @@ const LoginConfirmationPage = () => {
                 <LoginConfirmationCard
                     companyName={companyName}
                     onStartSetup={handleStartSetup} />
-
             </GradientContainer>
         </div>
     )

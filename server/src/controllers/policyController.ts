@@ -14,10 +14,10 @@ export const createPolicy: RequestHandler = async (req, res) => {
       const uploadResult = await cloudinaryUpload(req.file);
       documentUrl = uploadResult.url;
       publicId = uploadResult.public_id;
-    } 
+    }
 
     const isComplete = policyName && category && effectiveFrom && documentUrl
-    const status = isComplete ? "Active" : "Draft"  
+    const status = isComplete ? "Active" : "Draft"
 
     const policy = await Policy.create({
       policyName,
@@ -58,7 +58,7 @@ export const getPolicyById: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id || Array.isArray(id)) {
-            return res.status(400).json({ message: "Invalid ID format" });
+      return res.status(400).json({ message: "Invalid ID format" });
     }
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid Policy ID" });
@@ -86,8 +86,8 @@ export const updatePolicy: RequestHandler = async (req, res) => {
     const { id } = req.params;
     const { policyName, category, effectiveFrom } = req.body;
     if (!id || Array.isArray(id)) {
-            return res.status(400).json({ message: "Invalid ID format" });
-        }
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid Policy ID" });
     }
@@ -101,7 +101,7 @@ export const updatePolicy: RequestHandler = async (req, res) => {
     let documentUrl = existingPolicy.documentUrl;
     let publicId = existingPolicy.publicId;
 
-    
+
     if (req.file) {
       const uploadResult = await cloudinaryUpload(req.file);
       documentUrl = uploadResult.url;
@@ -137,8 +137,8 @@ export const deletePolicy: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id || Array.isArray(id)) {
-            return res.status(400).json({ message: "Invalid ID format" });
-        }
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid Policy ID" });
     }

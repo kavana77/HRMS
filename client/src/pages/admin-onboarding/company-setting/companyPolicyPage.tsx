@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { usePolicy } from "@/hooks/usePolicy"
 import type { PolicyType } from "@/lib/zodSchema"
+import { completeStep } from "@/utils/http"
 import { ArrowLeft } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -21,7 +22,7 @@ const CompanyPolicyPage = () => {
     const [editingPolicy, setEditingPolicy] = useState<PolicyWithId | null>(null)
     const [file, setFile] = useState<File | null>(null)
     const [isOpen, setIsOpen] = useState(false)
-    const { handleSubmit, register,watch, setValue, reset } = useForm<PolicyType>()
+    const { handleSubmit, register, watch, setValue, reset } = useForm<PolicyType>()
     const { createPolicy, policies, updatePolicy, isError, isLoading, deletePolicy } = usePolicy()
     const handleEdit = (policy: PolicyWithId) => {
         setEditingPolicy(policy);
@@ -41,6 +42,7 @@ const CompanyPolicyPage = () => {
             });
         } else {
             await createPolicy({ data: formData, file: file || undefined });
+            await completeStep("policies")
         }
 
         reset();
@@ -60,7 +62,7 @@ const CompanyPolicyPage = () => {
             <div className="bg-white rounded-xl p-4 shadow-sm border">
                 <div className="flex items-center justify-between mb-6">
                     <h2 className=" font-medium">Policy List of 2026</h2>
-                    <Button onClick={() => {setIsOpen(true); setEditingPolicy(null); reset(); setFile(null)}} className="cursor-pointer">+ Add Policy</Button>
+                    <Button onClick={() => { setIsOpen(true); setEditingPolicy(null); reset(); setFile(null) }} className="cursor-pointer">+ Add Policy</Button>
                 </div>
                 {/* Empty State */}
                 {Array.isArray(policies) && policies.length === 0 ? <EmptyState /> : <PolicyList
@@ -103,7 +105,7 @@ const CompanyPolicyPage = () => {
                         </div>
                         {/* File Upload */}
                         <FileUploads
-                        title="Upload Policy"
+                            title="Upload Policy"
                             uploadTypes="file"
                             onFileChange={setFile} />
                         <div className="flex gap-4 justify-end mt-6">

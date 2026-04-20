@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
-    const {login} = useAuth()
+    const { login } = useAuth()
     const [apiError, setApiError] = useState<string | null>(null)
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AdminLoginType>({
@@ -18,16 +18,15 @@ const LoginPage = () => {
     const onSubmit = async (data: AdminLoginType) => {
         try {
             setApiError(null)
-            const res= await login(data)
+            const res = await login(data)
             console.log("Logged in sucessfully", data)
             reset()
-            if(res.user.isFirstLogin){
+            if (res.user.isFirstLogin) {
                 navigate("/admin/login-confirmation")
-            }else{
+            } else {
                 navigate("/admin/workspace-setup")
             }
-            
-        } catch (error:any) {
+        } catch (error: any) {
             console.error("Failed to login", error)
             setApiError(error.message || "Invalid email or password")
         }
@@ -49,8 +48,8 @@ const LoginPage = () => {
                     isSubmitting={isSubmitting}
                     handleSubmit={handleSubmit}
                     register={register}
-                    apiError={apiError} 
-                    setApiError={setApiError}/>
+                    apiError={apiError}
+                    setApiError={setApiError} />
             </GradientContainer>
         </div>
     )

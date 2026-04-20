@@ -5,7 +5,7 @@ interface GradientContainerProps {
 const GradientContainer = ({ children }: GradientContainerProps) => {
   return (
     <div className=" flex items-center justify-center ">
-      
+
       {/* Outer Container */}
       <div className="relative w-[460px] rounded-[28px] border border-[#BFD5FB] bg-[#EAF1FE] p-4 flex items-center justify-center overflow-hidden shadow-[inset_0_0_40px_rgba(48,119,243,0.18)]">
 

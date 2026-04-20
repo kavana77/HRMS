@@ -6,7 +6,7 @@ type UploadStatus = "idle" | "uploading" | "success" | "error"
 type FileUpload = {
   title: string,
   uploadTypes: "image" | "file"
-  onFileChange?: (file: File) =>  void
+  onFileChange?: (file: File) => void
 }
 const uploadConfig = {
   image: {
@@ -17,21 +17,21 @@ const uploadConfig = {
   file: {
     maxSize: 20 * 1024 * 1024,
     accept: ".pdf, .doc, .docx, .xls, .xlsx, .txt",
-    label : "pfd, doc, xlsx, txt etc (max 20MB)"
+    label: "pfd, doc, xlsx, txt etc (max 20MB)"
   }
 }
 
 
-const FileUploads = ({uploadTypes,onFileChange,title}:FileUpload) => {
+const FileUploads = ({ uploadTypes, onFileChange, title }: FileUpload) => {
   const config = uploadConfig[uploadTypes]
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
   const [progress, setProgress] = useState(0)
   const [status, setStatus] = useState<UploadStatus>("idle")
- const MAX_SIZE = config.maxSize
+  const MAX_SIZE = config.maxSize
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
-    if(selected && onFileChange){
+    if (selected && onFileChange) {
       onFileChange(selected)
     }
     if (!selected) return
@@ -40,10 +40,9 @@ const FileUploads = ({uploadTypes,onFileChange,title}:FileUpload) => {
       setFile(selected)
       setStatus("error")
       setFileError(
-    `File size exceeds ${
-      uploadTypes === "image" ? "2 MB" : "20 MB"
-    }. Please upload a smaller file.`
-  )
+        `File size exceeds ${uploadTypes === "image" ? "2 MB" : "20 MB"
+        }. Please upload a smaller file.`
+      )
       return
     }
 
@@ -80,7 +79,7 @@ const FileUploads = ({uploadTypes,onFileChange,title}:FileUpload) => {
       {/* DEFAULT STATE */}
       {!file && (
         <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg h-36 cursor-pointer text-gray-500 hover:border-blue-500 transition">
-          
+
           <UploadCloud className="w-6 h-6 mb-2 text-blue-500" />
 
           <p className="text-sm">
@@ -108,12 +107,12 @@ const FileUploads = ({uploadTypes,onFileChange,title}:FileUpload) => {
             ${status === "error" ? "border-red-600" : "border-gray-300"}`}
           >
             <div className="flex items-center gap-3">
-              {uploadTypes === "image"? (
+              {uploadTypes === "image" ? (
                 <Image className="text-gray-400" />
-              ):(
-                <File className="text-gray-400"/>
+              ) : (
+                <File className="text-gray-400" />
               )}
-              
+
 
               <div>
                 <p className="text-sm font-medium">{file.name}</p>

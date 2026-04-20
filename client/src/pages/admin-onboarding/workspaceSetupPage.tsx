@@ -21,25 +21,25 @@ const WorkspaceSetupPage = () => {
   const [completedSteps, setCompletedSteps] = useState<string[]>([])
   const [companyExists, setCompanyExists] = useState(false)
   const [openInviteAdmin, setOpenInviteAdmin] = useState(false)
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const [companyRes, progressRes] = await Promise.all([
-        getCompanyProfile(),
-        getProgress()
-      ])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [companyRes, progressRes] = await Promise.all([
+          getCompanyProfile(),
+          getProgress()
+        ])
 
-      setCompanyExists(companyRes.exists)
-      setProgress(progressRes.progress || 0)
-      setCompletedSteps(progressRes.completedSteps || [])
+        setCompanyExists(companyRes.exists)
+        setProgress(progressRes.progress || 0)
+        setCompletedSteps(progressRes.completedSteps || [])
 
-    } catch (error) {
-      console.error("Error fetching data", error)
+      } catch (error) {
+        console.error("Error fetching data", error)
+      }
     }
-  }
 
-  fetchData()
-}, [])
+    fetchData()
+  }, [])
   return (
     <div className="p-14 flex flex-col items-center justify-center bg-gray-50 ">
 
@@ -61,7 +61,7 @@ useEffect(() => {
 
         <SetupStepCard
           className="w-[200px] h-[420px]"
-          icon={<img src={companyExists?GFileIcon:FileIcon} className="w-8 h-8"/>}
+          icon={<img src={companyExists ? GFileIcon : FileIcon} className="w-8 h-8" />}
           title="Company Profile"
           description="Add your company details like name, logo, and registered address."
           onClick={!companyExists ? () => navigate("/admin/setup-company") : undefined}
@@ -70,7 +70,7 @@ useEffect(() => {
 
         <SetupStepCard
           className="w-[200px] h-[420px]"
-          icon={<img src={SettingIcon} className="w-8 h-8"/>}
+          icon={<img src={SettingIcon} className="w-8 h-8" />}
           title="Company Settings"
           description="Configure attendance rules, leave policies, and payroll preferences."
           onClick={() => navigate("/dashboard")}
@@ -80,7 +80,7 @@ useEffect(() => {
 
         <SetupStepCard
           className="w-[300px] h-[420px]"
-          icon={<img src={MailIcon} className="w-8 h-8"/>}
+          icon={<img src={MailIcon} className="w-8 h-8" />}
           title="Invite Admin"
           description="Invite your HR team members to help manage operations."
           onClick={() => setOpenInviteAdmin(true)}
@@ -96,38 +96,38 @@ useEffect(() => {
         Go to Dashboard →
       </button>
 
-    <InviteAdmin title="Invite Admin"
-    isOpen={openInviteAdmin}
-    onOpenChange={setOpenInviteAdmin}>
-                  <div className="text-gray-500 space-y-2">
-              <Label className="mt-6">
-                Full Name <span className="text-red-500">*</span>
-              </Label>
-              <Input placeholder="e.g. Abhinav Chowdary" className="py-5" />
+      <InviteAdmin title="Invite Admin"
+        isOpen={openInviteAdmin}
+        onOpenChange={setOpenInviteAdmin}>
+        <div className="text-gray-500 space-y-2">
+          <Label className="mt-6">
+            Full Name <span className="text-red-500">*</span>
+          </Label>
+          <Input placeholder="e.g. Abhinav Chowdary" className="py-5" />
 
-              <Label className="mt-5">
-                Company's Email ID <span className="text-red-500">*</span>
-              </Label>
-              <Input placeholder="e.g. abhinav@company.com" className="py-5" />
-            </div>
- {/* ACTION BUTTONS */}
-      <div className="flex gap-4 items-center justify-center mt-6">
-        
-        <Button
-          variant="outline"
-          className="px-12 border-blue-600 text-blue-600"
-          onClick={()=>setOpenInviteAdmin(false)}
-        >
-          Cancel
-        </Button>
-        
-        <Button type="submit" className="px-12 bg-blue-600  hover:bg-blue-700">
-          Save
-        </Button>
+          <Label className="mt-5">
+            Company's Email ID <span className="text-red-500">*</span>
+          </Label>
+          <Input placeholder="e.g. abhinav@company.com" className="py-5" />
+        </div>
+        {/* ACTION BUTTONS */}
+        <div className="flex gap-4 items-center justify-center mt-6">
+
+          <Button
+            variant="outline"
+            className="px-12 border-blue-600 text-blue-600"
+            onClick={() => setOpenInviteAdmin(false)}
+          >
+            Cancel
+          </Button>
+
+          <Button type="submit" className="px-12 bg-blue-600  hover:bg-blue-700">
+            Save
+          </Button>
         </div>
 
-    </InviteAdmin>
-   
+      </InviteAdmin>
+
     </div>
   )
 }

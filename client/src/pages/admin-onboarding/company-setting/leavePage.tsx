@@ -10,22 +10,22 @@ import { Link, useNavigate } from "react-router-dom"
 import HolidayList from "@/components/admin-onboarding/company-setting/HolidayList"
 import { useLeave } from "@/hooks/useLeave"
 import LeaveTable from "@/components/admin-onboarding/company-setting/LeaveTable"
-import {type LeaveResponseType } from "@/lib/zodSchema"
+import { type LeaveResponseType } from "@/lib/zodSchema"
 import { completeStep } from "@/utils/http"
 
 
 const LeavePage = () => {
     const navigate = useNavigate()
-    const { leaves, deleteLeave,updateLeaveStatus } = useLeave()
+    const { leaves, deleteLeave, updateLeaveStatus } = useLeave()
     const [selectedHoliday, setSelectedHoliday] = useState<any>(null)
     const { addHoliday, holidays, deleteHoliday, updateHoliday } = useHoliday()
     const { register, handleSubmit, reset } = useForm<{ holidayName: string, holidayDate: string }>()
     const [isOpen, setIsOpen] = useState(false)
     const [tab, setTab] = useState("company")
 
-    const handleStatusChange = async(id: string, status: "Active" | "Inactive")=>{
+    const handleStatusChange = async (id: string, status: "Active" | "Inactive") => {
         try {
-            await updateLeaveStatus({id, status})
+            await updateLeaveStatus({ id, status })
         } catch (error) {
             console.error("Failed to update status", error)
         }
@@ -37,11 +37,11 @@ const LeavePage = () => {
             console.error("Failed to delete leave", error)
         }
     }
-const handleEditLeave = (leave: LeaveResponseType) => {
-  navigate('/leave/add-leave', {
-  state: leave
-})
-}
+    const handleEditLeave = (leave: LeaveResponseType) => {
+        navigate('/leave/add-leave', {
+            state: leave
+        })
+    }
     console.log("holidays:", holidays)
     const handleDeleteHoliday = async (id: string) => {
         try {

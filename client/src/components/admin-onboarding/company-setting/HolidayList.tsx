@@ -43,7 +43,7 @@ const HolidayList = ({ holidays, onDelete, onEdit }: HolidayListProps) => {
                                 </TableCell>
                                 <TableCell className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-8">
-                                        <Pencil className="w-3 h-3 text-blue-500 cursor-pointer" onClick={()=> onEdit(holiday)}/>
+                                        <Pencil className="w-3 h-3 text-blue-500 cursor-pointer" onClick={() => onEdit(holiday)} />
                                         <Trash2 className="w-3 h-3 text-red-500 cursor-pointer" onClick={() => onDelete(holiday._id)} />
                                     </div>
                                 </TableCell>

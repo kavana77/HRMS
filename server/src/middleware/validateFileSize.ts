@@ -1,6 +1,6 @@
-import {  RequestHandler } from "express";
+import { RequestHandler } from "express";
 
-export const validateFileSize:RequestHandler = (
+export const validateFileSize: RequestHandler = (
   req,
   res,
   next

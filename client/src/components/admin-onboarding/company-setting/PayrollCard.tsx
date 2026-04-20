@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-const months = [1,2,3,4,5,6,7,8,9,10,11,12]
+const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const PayrollCard = () => {
     return (
         <div className="bg-white rounded-lg mt-6 mx-4 p-4 space-y-4 ">
@@ -12,13 +12,13 @@ const PayrollCard = () => {
                     <Select>
                         <SelectTrigger className="w-[357px] px-2 py-5">
                             <SelectValue className="text-gray-300" placeholder="Select day of month" />
-                            </SelectTrigger>
-                            <SelectContent className="mt-24">
-                            {months.map((month)=>(
+                        </SelectTrigger>
+                        <SelectContent className="mt-24">
+                            {months.map((month) => (
                                 <SelectItem key={month} value={month.toString()}>{month}</SelectItem>
                             ))}
-                            </SelectContent>
-                        
+                        </SelectContent>
+
                     </Select>
                 </div>
                 <p className="text-sm text-gray-800">Payroll reports will include attendance data up to the selected date each month</p>

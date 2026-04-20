@@ -11,7 +11,7 @@ export const useAuth = () => {
     })
     const loginMutation = useMutation({
         mutationFn: (data: AdminLoginType) => adminLogin(data),
-        onSuccess: (res) =>{
+        onSuccess: (res) => {
             localStorage.setItem("token", res.token)
         }
     })

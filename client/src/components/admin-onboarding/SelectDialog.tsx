@@ -19,10 +19,8 @@ const SelectDialog = ({ children, title, isOpen, onOpenChange }: SelectDialogPro
               {title}
             </DialogTitle>
           </DialogHeader>
-            {children}
-          
+          {children}
         </GradientContainer>
-
       </DialogContent>
     </Dialog>
   )

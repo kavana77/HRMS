@@ -39,7 +39,7 @@ const fileFilter: multer.Options["fileFilter"] = (
     file.mimetype.includes("excel");
 
   if (extname && (isImage || isDocument)) {
-    // ✅ Store type for size validation
+    // Store type for size validation
     (req as any).fileType = isImage ? "image" : "document";
 
     cb(null, true);

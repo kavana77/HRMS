@@ -27,7 +27,7 @@ const menuItems = [
 ]
 
 const AdminSidebar = () => {
-  const {state} = useSidebar()
+  const { state } = useSidebar()
   const location = useLocation()
 
   return (
@@ -52,43 +52,42 @@ const AdminSidebar = () => {
           return (
             <Tooltip >
               <TooltipTrigger>
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) =>
-                `relative flex items-center gap-3 px-3 py-2.5 rounded-l-lg text-sm font-medium transition-all
-                ${
-                  isActive
-                    ? "bg-[#E8F0FE] text-blue-500"
-                    : "text-gray-500 hover:bg-gray-100"
-                }
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `relative flex items-center gap-3 px-3 py-2.5 rounded-l-lg text-sm font-medium transition-all
+                ${isActive
+                      ? "bg-[#E8F0FE] text-blue-500"
+                      : "text-gray-500 hover:bg-gray-100"
+                    }
                 group-data-[collapsible=icon]:justify-center
                 group-data-[collapsible=icon]:p-2
                 group-data-[collapsible=icon]:h-12
                 group-data-[collapsible=icon]:hover:${item.name}
                 `
-              }
-            >
-              {/* ICON */}
-              <Icon size={18} className={`group-data-[collapsible=icon]:hover:${item.name}`}/>
+                  }
+                >
+                  {/* ICON */}
+                  <Icon size={18} className={`group-data-[collapsible=icon]:hover:${item.name}`} />
 
-              {/* TEXT (hidden when collapsed) */}
-              <span className="group-data-[collapsible=icon]:hidden">
-                {item.name}
-              </span>
+                  {/* TEXT (hidden when collapsed) */}
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    {item.name}
+                  </span>
 
-              {/* ACTIVE RIGHT BAR */}
-              {location.pathname === item.path && (
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 h-9 w-1 rounded-l bg-blue-500 group-data-[collapsible=icon]:h-11" />
-              )}
-            </NavLink>
-            <TooltipContent side="right"
-            hidden={state !== "collapsed"}
-            
-            >
-              {item.name}
-            </TooltipContent>
-            </TooltipTrigger>
+                  {/* ACTIVE RIGHT BAR */}
+                  {location.pathname === item.path && (
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 h-9 w-1 rounded-l bg-blue-500 group-data-[collapsible=icon]:h-11" />
+                  )}
+                </NavLink>
+                <TooltipContent side="right"
+                  hidden={state !== "collapsed"}
+
+                >
+                  {item.name}
+                </TooltipContent>
+              </TooltipTrigger>
             </Tooltip>
           )
         })}

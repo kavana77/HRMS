@@ -21,8 +21,8 @@ const Dashboard = () => {
                         icon={<img src={FileIcon} className="w-8 h-8" />}
                         title="Company Profile"
                         description="Add your company details like name, logo, and registered address.">
-                            <Button onClick={()=>navigate("/admin/setup-company")} className="cursor-pointer sm:text-xs">Set up</Button>
-                        </SetupStepCard>
+                        <Button onClick={() => navigate("/admin/setup-company")} className="cursor-pointer sm:text-xs">Set up</Button>
+                    </SetupStepCard>
                     <SetupStepCard
                         variant="horizontal"
                         icon={<img src={SettingIcon} className="w-8 h-8" />}
@@ -36,8 +36,8 @@ const Dashboard = () => {
                         icon={<img src={MailIcon} className="w-8 h-8" />}
                         title="Invite Admin"
                         description="Invite your HR team members to help manage operations.">
-                            <Button>Set Up</Button>
-                        </SetupStepCard>
+                        <Button>Set Up</Button>
+                    </SetupStepCard>
                 </div>
             </div>
         </div>

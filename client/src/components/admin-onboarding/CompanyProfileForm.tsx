@@ -16,21 +16,21 @@ type FormData = {
 
 const CompanyProfileForm = () => {
   const navigate = useNavigate()
-  const [file, setFile] = useState<File |null>(null)
+  const [file, setFile] = useState<File | null>(null)
   const [state, setState] = useState("")
   const [country, setCountry] = useState("")
   const companyName = localStorage.getItem("companyName") || ""
   const {
     register,
     handleSubmit,
-    formState: { isValid ,isLoading}
+    formState: { isValid, isLoading }
   } = useForm<FormData>({
     mode: "onChange"
   })
 
-  const onSubmit =async (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      
+
       await companySetup(
         {
           companyName: data.companyName,
@@ -54,7 +54,7 @@ const CompanyProfileForm = () => {
       {/* Company Name */}
       <div className="space-y-2">
         <Label className="text-gray-500">
-          Company Name 
+          Company Name
         </Label>
 
         <Input
@@ -67,9 +67,9 @@ const CompanyProfileForm = () => {
 
       {/* Upload */}
       <FileUploads
-      title="Company Logo"
-      uploadTypes="image" 
-      onFileChange={setFile}/>
+        title="Company Logo"
+        uploadTypes="image"
+        onFileChange={setFile} />
 
       {/* Address */}
       <div className="space-y-2">
@@ -99,8 +99,8 @@ const CompanyProfileForm = () => {
 
       {/* Country & State */}
       <LocationSelector
-      setState={setState}
-      setCountry={setCountry} />
+        setState={setState}
+        setCountry={setCountry} />
 
       {/* Button */}
       <Button
@@ -108,7 +108,7 @@ const CompanyProfileForm = () => {
         type="submit"
         disabled={!isValid}
       >
-        {isLoading ? "Saving...":"Save"}
+        {isLoading ? "Saving..." : "Save"}
       </Button>
 
     </form>

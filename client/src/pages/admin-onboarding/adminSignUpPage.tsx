@@ -7,15 +7,15 @@ import { useAuth } from "@/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 
 const AdminSignUpPage = () => {
-    const {signup} = useAuth()
+    const { signup } = useAuth()
     const navigate = useNavigate()
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } ,setValue} = useForm<AdminSignUpType>({
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting }, setValue } = useForm<AdminSignUpType>({
         resolver: zodResolver(adminSignupSchema)
     })
 
     const onSubmit = async (data: AdminSignUpType) => {
         try {
-            localStorage.setItem("companyName",data.companyName)
+            localStorage.setItem("companyName", data.companyName)
             await signup(data)
             console.log("Signed in successfully", data)
             reset()
@@ -40,8 +40,8 @@ const AdminSignUpPage = () => {
                     handleSubmit={handleSubmit}
                     register={register}
                     errors={errors}
-                    isSubmitting={isSubmitting} 
-                    setValue={setValue}/>
+                    isSubmitting={isSubmitting}
+                    setValue={setValue} />
             </GradientContainer>
         </div>
     )

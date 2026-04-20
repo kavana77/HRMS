@@ -4,12 +4,12 @@ import bcrypt from "bcryptjs"
 // import crypto from "crypto"
 import env from "../utils/validateEnv"
 import jwt from "jsonwebtoken"
-import {sendEmail} from "../utils/sendEmail"
+import { sendEmail } from "../utils/sendEmail"
 
 export const adminSignup: RequestHandler = async (req, res) => {
     try {
-        const { fullName, email, companyName,phoneNumber, password, confirmPassword } = req.body
-        if (!fullName|| !email || !companyName || !phoneNumber || !password || !confirmPassword) {
+        const { fullName, email, companyName, phoneNumber, password, confirmPassword } = req.body
+        if (!fullName || !email || !companyName || !phoneNumber || !password || !confirmPassword) {
             return res.status(400).json({ message: "All fields are required" })
         }
         if (password !== confirmPassword) {
@@ -47,20 +47,20 @@ export const adminSignup: RequestHandler = async (req, res) => {
         // const verifyLink = `${env.CLIENT_URL}/admin/verify-email?token=${verificationToken}`
 
         //  const subject = "Verify your email"
-    // const text = `Click the link to verify your email: ${verifyLink}`
+        // const text = `Click the link to verify your email: ${verifyLink}`
 
-    // const html = `
-    //   <h2>Email Verification</h2>
-    //   <p>Hello ${fullName},</p>
-    //   <p>Please click the button below to verify your email:</p>
-    //   <a href="${verifyLink}" style="padding:10px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;">
-    //     Verify Email
-    //   </a>
-    //   <p>This link will expire in 5 minutes.</p>
-    // `
+        // const html = `
+        //   <h2>Email Verification</h2>
+        //   <p>Hello ${fullName},</p>
+        //   <p>Please click the button below to verify your email:</p>
+        //   <a href="${verifyLink}" style="padding:10px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;">
+        //     Verify Email
+        //   </a>
+        //   <p>This link will expire in 5 minutes.</p>
+        // `
 
-    //  SEND EMAIL (IMPORTANT FIX)
-    // await sendEmail(email, subject, text, html)
+        //  SEND EMAIL (IMPORTANT FIX)
+        // await sendEmail(email, subject, text, html)
         return res.status(201).json({ message: "Signup successful. Please verify your email ", email: newAdmin.email })
     } catch (error) {
         console.error(error)
@@ -81,14 +81,15 @@ export const adminLogin: RequestHandler = async (req, res) => {
         }
         const token = jwt.sign({ id: user._id, role: user.role }, env.JWT_SECRET, { expiresIn: "1h" })
         console.log(token)
-        return res.status(200).json({ token: token,
+        return res.status(200).json({
+            token: token,
             user: {
                 fullName: user.fullName,
                 email: user.email,
                 companyName: user.companyName,
                 isFirstLogin: user.isFirstLogin
             }
-         })
+        })
     } catch (error) {
         console.error("Error in login", error)
         return res.status(500).json({ meesage: "Internal Server error" })
@@ -96,26 +97,26 @@ export const adminLogin: RequestHandler = async (req, res) => {
 }
 
 export const completeFirstLogin: RequestHandler = async (req, res) => {
-  try {
-    const adminId = (req as any).user?.id
+    try {
+        const adminId = (req as any).user?.id
 
-    if (!adminId) {
-      return res.status(401).json({ message: "Unauthorized" })
+        if (!adminId) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            adminId,
+            { isFirstLogin: false },
+            { new: true }
+        )
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" })
+        }
+        return res.status(200).json({ message: "Updated" })
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ message: "Internal Server error" })
     }
-
-    const updatedUser = await User.findByIdAndUpdate(
-      adminId,
-      { isFirstLogin: false },
-      { new: true }
-    )
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" })
-    }
-    return res.status(200).json({ message: "Updated" })
-
-  } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: "Internal Server error" })
-  }
 }
